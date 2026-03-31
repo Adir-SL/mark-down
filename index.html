@@ -4,286 +4,394 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>mark-down.js — Markdown as a native HTML element</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script src="mark-down.js" defer></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:       #ffffff;
-      --bg-soft:  #f7f6f3;
-      --bg-hover: #f1f1ef;
-      --border:   #e9e5e0;
-      --border2:  #d3cdc5;
-      --text:     #37352f;
-      --muted:    #787774;
-      --light:    #acaba8;
-      --mono:     'SFMono-Regular', 'Fira Mono', Consolas, 'Liberation Mono', Menlo, monospace;
-      --radius:   8px;
+      --bg:        #ffffff;
+      --bg-soft:   #faf9f7;
+      --bg-card:   #f5f3ef;
+      --bg-hover:  #f0ede8;
+      --border:    #e5e1db;
+      --border-md: #cdc8c0;
+      --text:      #1c1b18;
+      --sub:       #6b6760;
+      --dim:       #a8a49f;
+      --mono:      'Fira Mono', 'SFMono-Regular', Consolas, monospace;
+      --sans:      'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --r:         10px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --shadow:    0 4px 16px rgba(0,0,0,.07), 0 1px 4px rgba(0,0,0,.05);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,.1), 0 4px 12px rgba(0,0,0,.06);
     }
 
     html { scroll-behavior: smooth; }
 
     body {
+      font-family: var(--sans);
       background: var(--bg);
       color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
       line-height: 1.65;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    a { color: var(--text); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    a { color: inherit; text-decoration: none; }
 
     code {
       font-family: var(--mono);
-      font-size: 0.82em;
-      background: var(--bg-soft);
+      font-size: .8em;
+      background: var(--bg-card);
       border: 1px solid var(--border);
-      padding: 0.12em 0.4em;
-      border-radius: 4px;
+      padding: .12em .42em;
+      border-radius: 5px;
       color: var(--text);
     }
 
-    /* ── Nav ──────────────────────────────────────── */
+    /* ── Nav ──────────────────────────────────────────────────── */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(255,255,255,0.9);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(255,255,255,.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
-      padding: 0 2rem;
+      padding: 0 2.5rem;
       display: flex; align-items: center; justify-content: space-between;
-      height: 56px;
+      height: 58px;
     }
-
     .nav-logo {
       font-family: var(--mono);
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text);
-      letter-spacing: -0.02em;
+      font-weight: 500; font-size: .92rem;
+      color: var(--text); letter-spacing: -.01em;
     }
-
-    .nav-links { display: flex; gap: 0.25rem; align-items: center; }
+    .nav-links { display: flex; gap: .15rem; align-items: center; }
     .nav-links a {
-      color: var(--muted);
-      font-size: 0.875rem;
-      padding: 0.35em 0.7em;
-      border-radius: 6px;
-      transition: background .15s, color .15s;
+      font-size: .875rem; font-weight: 500;
+      color: var(--sub);
+      padding: .38em .75em; border-radius: 7px;
+      transition: background .13s, color .13s;
     }
-    .nav-links a:hover {
-      background: var(--bg-hover);
-      color: var(--text);
-      text-decoration: none;
-    }
+    .nav-links a:hover { background: var(--bg-card); color: var(--text); }
+    /* prevent nav-links specificity from overriding button colors */
+    .nav-links .btn-solid        { color: #fff; }
+    .nav-links .btn-solid:hover  { color: #fff; background: #2e2d28; }
 
     .btn {
-      display: inline-flex; align-items: center; gap: 0.4em;
-      padding: 0.4em 0.9em;
-      border-radius: 6px;
-      font-size: 0.875rem; font-weight: 500;
-      transition: background .15s;
-      text-decoration: none; cursor: pointer;
-      white-space: nowrap;
+      display: inline-flex; align-items: center; gap: .4em;
+      padding: .42em 1em; border-radius: 8px;
+      font-family: var(--sans); font-size: .875rem; font-weight: 600;
+      transition: all .15s; cursor: pointer; white-space: nowrap;
     }
-    .btn-dark {
-      background: var(--text);
-      color: #fff;
+    .btn-solid {
+      background: var(--text); color: #fff;
+      box-shadow: 0 1px 2px rgba(0,0,0,.18);
     }
-    .btn-dark:hover { background: #1a1915; text-decoration: none; }
-    .btn-ghost {
-      border: 1px solid var(--border);
-      color: var(--text); background: transparent;
+    .btn-solid:hover { background: #2e2d28; }
+    .btn-outline {
+      background: var(--bg); color: var(--text);
+      border: 1px solid var(--border-md);
+      box-shadow: var(--shadow-sm);
     }
-    .btn-ghost:hover { background: var(--bg-hover); text-decoration: none; }
+    .btn-outline:hover { background: var(--bg-card); }
 
-    @media (max-width: 600px) { .nav-hide { display: none; } }
+    @media (max-width: 640px) { .nav-hide { display: none; } }
 
-    /* ── Hero ─────────────────────────────────────── */
+    /* ── Hero ─────────────────────────────────────────────────── */
     .hero {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 8rem 2rem 6rem;
       text-align: center;
+      padding: 9rem 2rem 8rem;
+      position: relative;
+      overflow: hidden;
+      /* warm parchment gradient base */
+      background: linear-gradient(160deg, #fdfcfa 0%, #f7f4ef 55%, #faf9f7 100%);
+    }
+
+    /* dot grid */
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(180,170,155,.55) 1px, transparent 1px);
+      background-size: 26px 26px;
+      pointer-events: none;
+    }
+    /* vignette — fades the grid and adds depth */
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 70% at 50% 35%, rgba(253,252,250,.96) 30%, transparent 100%),
+        linear-gradient(to bottom, transparent 40%, rgba(247,244,239,.98) 100%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center;
+    }
+
+    /* small badge above logo */
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: .3em .9em;
+      font-size: .72rem; font-weight: 500;
+      color: var(--sub);
+      letter-spacing: .01em;
+      margin-bottom: 2.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--border-md);
+      flex-shrink: 0;
     }
 
     .logo-tag {
       display: inline-block;
       font-family: var(--mono);
-      font-size: clamp(2rem, 7vw, 4rem);
-      font-weight: 600;
+      font-weight: 500;
+      font-size: clamp(2.2rem, 7vw, 4.5rem);
       color: var(--text);
-      letter-spacing: -0.04em;
+      letter-spacing: -.04em;
       line-height: 1;
-      padding: 0.35em 0.7em;
-      border: 1.5px solid var(--border2);
-      border-radius: 10px;
-      background: var(--bg-soft);
-      margin-bottom: 2.25rem;
+      padding: .4em .75em;
+      background: var(--bg);
+      /* layered border: outer glow + crisp inner border */
+      border: 1.5px solid var(--border-md);
+      border-radius: 16px;
+      box-shadow:
+        0 0 0 6px rgba(205,200,192,.18),
+        0 0 0 12px rgba(205,200,192,.08),
+        var(--shadow-lg);
+      margin-bottom: 2.75rem;
     }
 
     .hero h1 {
-      font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+      font-size: clamp(1.75rem, 4.5vw, 3rem);
       font-weight: 700;
+      letter-spacing: -.045em;
+      line-height: 1.15;
       color: var(--text);
-      letter-spacing: -0.03em;
-      line-height: 1.25;
-      margin-bottom: 1rem;
+      max-width: 600px;
+      margin-bottom: 1.1rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--sub);
     }
 
     .hero p {
       font-size: 1.1rem;
-      color: var(--muted);
-      max-width: 460px;
-      margin: 0 auto 2.5rem;
+      color: var(--sub);
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+      line-height: 1.65;
     }
 
     .hero-ctas {
-      display: flex; gap: .75rem;
+      display: flex; gap: .65rem;
       justify-content: center; flex-wrap: wrap;
-      margin-bottom: 3rem;
+      margin-bottom: 2.75rem;
     }
 
-    .script-pill {
+    .pill {
       display: inline-flex; align-items: center; gap: .5rem;
-      background: var(--bg-soft);
+      background: var(--bg);
       border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: .5rem 1rem;
-      font-family: var(--mono); font-size: .8rem;
-      color: var(--muted);
-      cursor: default;
+      border-radius: 8px;
+      padding: .55rem 1.1rem;
+      font-family: var(--mono); font-size: .79rem;
+      color: var(--sub);
+      box-shadow: var(--shadow-sm);
     }
-    .script-pill code {
+    .pill code {
       background: none; border: none; padding: 0;
-      font-size: .8rem; color: var(--text);
+      font-size: .79rem; color: var(--text);
     }
 
-    /* ── Divider ──────────────────────────────────── */
+    /* ── Shared ───────────────────────────────────────────────── */
     .divider { border: none; border-top: 1px solid var(--border); }
 
-    /* ── Section layout ───────────────────────────── */
-    section { padding: 5rem 2rem; }
-    .container { max-width: 1040px; margin: 0 auto; }
+    section { padding: 6rem 2.5rem; }
+    .wrap { max-width: 1060px; margin: 0 auto; }
 
-    .s-eyebrow {
-      font-size: .72rem; font-weight: 600;
-      letter-spacing: .1em; text-transform: uppercase;
-      color: var(--light); margin-bottom: .6rem;
+    .eyebrow {
+      display: inline-block;
+      font-size: .7rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--dim); margin-bottom: .65rem;
     }
     .s-title {
-      font-size: clamp(1.4rem, 2.8vw, 1.85rem);
-      font-weight: 700; letter-spacing: -0.03em;
-      margin-bottom: .75rem; color: var(--text);
+      font-size: clamp(1.5rem, 2.8vw, 2rem);
+      font-weight: 700; letter-spacing: -.035em; line-height: 1.2;
+      margin-bottom: .8rem;
     }
-    .s-desc { color: var(--muted); font-size: 1rem; max-width: 520px; margin-bottom: 3rem; }
+    .s-desc {
+      color: var(--sub); font-size: 1rem; font-weight: 400;
+      max-width: 500px; margin-bottom: 3.5rem;
+      line-height: 1.7;
+    }
 
-    /* ── Feature cards ────────────────────────────── */
+    /* ── Features ─────────────────────────────────────────────── */
     .feat-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      grid-template-columns: repeat(4, 1fr);
       gap: 1px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
       background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
     }
+    @media (max-width: 900px) { .feat-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 500px) { .feat-grid { grid-template-columns: 1fr; } }
+
     .feat {
       background: var(--bg);
-      padding: 1.5rem;
+      padding: 1.75rem 1.5rem;
       transition: background .15s;
     }
     .feat:hover { background: var(--bg-soft); }
-    .feat-icon { font-size: 1.25rem; margin-bottom: .6rem; }
-    .feat h3 { font-size: .9rem; font-weight: 600; margin-bottom: .35rem; color: var(--text); }
-    .feat p  { font-size: .83rem; color: var(--muted); line-height: 1.55; }
 
-    /* ── Steps ────────────────────────────────────── */
-    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; }
-    .step  { display: flex; gap: 1rem; }
-    .step-num {
-      flex-shrink: 0;
-      width: 1.6rem; height: 1.6rem;
-      border-radius: 50%;
-      border: 1.5px solid var(--border2);
-      color: var(--muted);
-      font-weight: 700; font-size: .78rem;
-      display: flex; align-items: center; justify-content: center;
-      margin-top: .2rem;
-    }
-    .step h3 { font-size: .9rem; font-weight: 600; margin-bottom: .3rem; }
-    .step p  { font-size: .83rem; color: var(--muted); }
-
-    /* ── Highlighted code block ───────────────────── */
-    pre.codeblock {
-      background: var(--bg-soft);
+    .feat-icon {
+      width: 36px; height: 36px;
+      background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.4rem 1.6rem;
-      overflow-x: auto;
-      font-family: var(--mono); font-size: .83rem; line-height: 1.75;
-      margin-top: 2.5rem;
-      color: var(--text);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      margin-bottom: 1rem;
     }
-    .hl-tag  { color: #448361; }
-    .hl-attr { color: #7a6b3e; }
-    .hl-val  { color: #6f5eae; }
-    .hl-note { color: var(--light); font-style: italic; }
+    .feat h3 {
+      font-size: .9rem; font-weight: 600;
+      margin-bottom: .4rem; line-height: 1.3;
+    }
+    .feat p { font-size: .83rem; color: var(--sub); line-height: 1.6; }
 
-    /* ── Demo section ─────────────────────────────── */
-    #demo { background: var(--bg-soft); }
+    /* ── Usage ────────────────────────────────────────────────── */
+    #usage { background: var(--bg-soft); }
 
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      margin-bottom: 2.5rem;
+    }
+    @media (max-width: 700px) { .steps { grid-template-columns: 1fr; } }
+
+    .step {
+      background: var(--bg);
+      padding: 2rem 1.75rem;
+    }
+    .step-num {
+      font-family: var(--mono);
+      font-size: .72rem; font-weight: 500;
+      color: var(--dim);
+      margin-bottom: .85rem;
+    }
+    .step h3 { font-size: .925rem; font-weight: 600; margin-bottom: .4rem; }
+    .step p  { font-size: .84rem; color: var(--sub); line-height: 1.6; }
+
+    /* code editor block */
+    .editor {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .editor-bar {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: .6rem 1rem;
+      display: flex; align-items: center; gap: .85rem;
+    }
+    .editor-dots { display: flex; gap: .4rem; }
+    .editor-dot {
+      width: 11px; height: 11px; border-radius: 50%;
+      background: var(--border-md);
+    }
+    .editor-filename {
+      font-family: var(--mono); font-size: .75rem; color: var(--dim);
+    }
+    .editor pre {
+      padding: 1.5rem 1.75rem;
+      font-family: var(--mono); font-size: .82rem; line-height: 1.8;
+      overflow-x: auto; color: var(--text);
+    }
+    .t  { color: #448361; }   /* tag */
+    .a  { color: #7a6b3e; }   /* attr */
+    .v  { color: #6f5eae; }   /* value */
+    .c  { color: var(--dim); font-style: italic; } /* comment */
+    .tx { color: var(--sub); }  /* markdown text */
+
+    /* ── Demo ─────────────────────────────────────────────────── */
     .demo-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
+      gap: 1.25rem;
     }
-    .demo-full { grid-column: 1 / -1; }
+    .demo-wide { grid-column: 1 / -1; }
     @media (max-width: 680px) {
       .demo-grid { grid-template-columns: 1fr; }
-      .demo-full { grid-column: 1; }
+      .demo-wide { grid-column: 1; }
     }
 
     .demo-card {
       background: var(--bg);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: var(--r);
       overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow .2s, border-color .2s;
     }
-    .demo-card-bar {
+    .demo-card:hover {
+      box-shadow: var(--shadow);
+      border-color: var(--border-md);
+    }
+    .demo-bar {
       background: var(--bg-soft);
       border-bottom: 1px solid var(--border);
-      padding: .5rem 1rem;
-      font-size: .72rem; color: var(--muted);
-      font-family: var(--mono);
-      display: flex; align-items: center; gap: .35rem;
+      padding: .52rem 1rem;
+      display: flex; align-items: center; gap: .4rem;
     }
-    .dot {
-      width: 9px; height: 9px; border-radius: 50%;
-      background: var(--border2);
+    .demo-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--border-md); }
+    .demo-label {
+      font-size: .7rem; color: var(--dim);
+      font-family: var(--mono); margin-left: .25rem;
     }
-    .demo-card-body { padding: 1.5rem; }
+    .demo-body { padding: 1.5rem 1.75rem; }
 
-    /* ── Syntax table ─────────────────────────────── */
+    /* ── Syntax table ─────────────────────────────────────────── */
     .syn-wrap {
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: var(--r);
       overflow: hidden;
+      box-shadow: var(--shadow-sm);
     }
     table.syn { width: 100%; border-collapse: collapse; font-size: .875rem; }
     table.syn th, table.syn td {
-      padding: .6rem 1rem;
+      padding: .65rem 1.1rem;
       border-bottom: 1px solid var(--border);
       text-align: left; vertical-align: middle;
     }
     table.syn tr:last-child td { border-bottom: none; }
     table.syn th {
-      background: var(--bg-soft);
-      font-size: .72rem; font-weight: 600;
-      letter-spacing: .08em; text-transform: uppercase;
-      color: var(--muted);
+      background: var(--bg-card);
+      font-size: .7rem; font-weight: 700;
+      letter-spacing: .09em; text-transform: uppercase;
+      color: var(--dim);
     }
     table.syn td:first-child {
       font-family: var(--mono); font-size: .8rem;
@@ -291,32 +399,53 @@
     }
     table.syn tr:hover td { background: var(--bg-soft); }
 
-    /* ── Footer ───────────────────────────────────── */
+    /* ── Callout strip ────────────────────────────────────────── */
+    .callout {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 3rem;
+      text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 1.25rem;
+    }
+    .callout-logo {
+      font-family: var(--mono); font-weight: 500;
+      font-size: 1.3rem; color: var(--text);
+      letter-spacing: -.03em;
+    }
+    .callout h3 {
+      font-size: 1.25rem; font-weight: 700;
+      letter-spacing: -.03em;
+    }
+    .callout p { color: var(--sub); font-size: .95rem; max-width: 420px; }
+
+    /* ── Footer ───────────────────────────────────────────────── */
     footer {
       border-top: 1px solid var(--border);
-      padding: 3rem 2rem;
-      text-align: center;
-      color: var(--muted); font-size: .875rem;
+      padding: 2.5rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
     }
     .footer-logo {
-      font-family: var(--mono);
-      font-size: 1.1rem; font-weight: 600;
-      color: var(--text);
-      margin-bottom: .6rem;
-      letter-spacing: -0.02em;
+      font-family: var(--mono); font-weight: 500;
+      font-size: .9rem; color: var(--sub);
+      letter-spacing: -.01em;
     }
-    footer p { margin-top: .35rem; color: var(--light); }
-    .footer-links {
-      display: flex; gap: 1.5rem;
-      justify-content: center; margin-top: 1.25rem;
+    .footer-right {
+      display: flex; gap: .15rem; align-items: center;
     }
-    .footer-links a { color: var(--muted); font-size: .875rem; }
-    .footer-links a:hover { color: var(--text); }
+    .footer-right a {
+      font-size: .83rem; color: var(--sub);
+      padding: .32em .7em; border-radius: 6px;
+      transition: background .13s, color .13s;
+    }
+    .footer-right a:hover { background: var(--bg-card); color: var(--text); }
+    @media (max-width: 540px) { footer { flex-direction: column; align-items: flex-start; } }
   </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════ NAV -->
+<!-- ════════════════ NAV -->
 <nav>
   <div class="nav-logo">&lt;mark-down&gt;</div>
   <div class="nav-links">
@@ -324,8 +453,8 @@
     <a href="#usage"    class="nav-hide">Usage</a>
     <a href="#demo"     class="nav-hide">Demo</a>
     <a href="#syntax"   class="nav-hide">Syntax</a>
-    <a href="https://github.com" class="btn btn-dark" style="margin-left:.5rem">
-      <svg height="14" viewBox="0 0 16 16" fill="currentColor" style="flex-shrink:0">
+    <a href="https://github.com" class="btn btn-solid" style="margin-left:.5rem">
+      <svg height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
         <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
           0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
           -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66
@@ -340,44 +469,50 @@
   </div>
 </nav>
 
-<!-- ════════════════════════════════════ HERO -->
-<div class="hero">
-  <div class="logo-tag">&lt;mark-down&gt;</div>
-  <h1>Markdown as a native HTML element</h1>
-  <p>A zero-dependency vanilla JS library. Drop in two files, use <code>&lt;mark-down&gt;</code> anywhere in your HTML — it just works.</p>
-  <div class="hero-ctas">
-    <a href="#usage" class="btn btn-dark">Get started &rarr;</a>
-    <a href="#demo"  class="btn btn-ghost">See it live</a>
+<!-- ════════════════ HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Web Components &nbsp;&middot;&nbsp; Zero dependencies &nbsp;&middot;&nbsp; Vanilla JS
+    </div>
+    <div class="logo-tag">&lt;mark-down&gt;</div>
+    <h1>Markdown as a<br><em>native HTML element</em></h1>
+    <p>Drop in two files, write markdown directly in your HTML — no build step, no npm, no configuration.</p>
+    <div class="hero-ctas">
+      <a href="#usage" class="btn btn-solid">Get started &rarr;</a>
+      <a href="#demo"  class="btn btn-outline">See it live</a>
+    </div>
+    <div class="pill">
+      <code>&lt;script src="mark-down.js" defer&gt;&lt;/script&gt;</code>
+    </div>
   </div>
-  <div class="script-pill">
-    <code>&lt;script src="mark-down.js" defer&gt;&lt;/script&gt;</code>
-  </div>
-</div>
+</section>
 
 <hr class="divider">
 
-<!-- ════════════════════════════════════ FEATURES -->
+<!-- ════════════════ FEATURES -->
 <section id="features">
-  <div class="container">
-    <div class="s-eyebrow">Why mark-down.js</div>
-    <h2 class="s-title">Everything you need, nothing you don't</h2>
-    <p class="s-desc">Built on Web Components standards. No build step, no npm, no framework required.</p>
+  <div class="wrap">
+    <span class="eyebrow">Why mark-down.js</span>
+    <h2 class="s-title">Everything you need,<br>nothing you don't</h2>
+    <p class="s-desc">Built on Web Components standards. No build step, no npm, no framework required — just two files.</p>
 
     <div class="feat-grid">
       <div class="feat">
         <div class="feat-icon">⚡</div>
         <h3>Zero dependencies</h3>
-        <p>Pure vanilla JavaScript. One <code>.js</code> and one <code>.css</code> file. No npm, no bundler, no configuration.</p>
+        <p>One <code>.js</code> and one <code>.css</code> file. No npm, no bundler, no configuration of any kind.</p>
       </div>
       <div class="feat">
         <div class="feat-icon">🧩</div>
         <h3>Web Components</h3>
-        <p>Built on the native Custom Elements API. Works in all modern browsers alongside any framework — or none at all.</p>
+        <p>Built on the native Custom Elements API. Works in all modern browsers alongside any framework — or none.</p>
       </div>
       <div class="feat">
         <div class="feat-icon">🛡️</div>
         <h3>Shadow DOM isolation</h3>
-        <p>Rendered inside Shadow DOM so styles never bleed in or out. Your page and your markdown stay completely separate.</p>
+        <p>Styles never bleed in or out. Your page and your markdown content stay completely independent.</p>
       </div>
       <div class="feat">
         <div class="feat-icon">✂️</div>
@@ -387,22 +522,22 @@
       <div class="feat">
         <div class="feat-icon">🎨</div>
         <h3>Inherits your colors</h3>
-        <p>The stylesheet uses <code>currentColor</code> and relative units, adapting to your page's text color and font size.</p>
+        <p>Uses <code>currentColor</code> and relative units — adapts to your page's text color and font size seamlessly.</p>
       </div>
       <div class="feat">
         <div class="feat-icon">📐</div>
         <h3>Full markdown syntax</h3>
-        <p>Headings, bold, italic, strikethrough, code blocks, blockquotes, lists, tables, links, images, and rules.</p>
+        <p>Headings, bold, italic, strikethrough, code blocks, blockquotes, lists, tables, links, and images.</p>
       </div>
       <div class="feat">
         <div class="feat-icon">🔄</div>
-        <h3>Dynamic content ready</h3>
-        <p>Uses <code>connectedCallback</code> so elements added to the DOM after page load render automatically.</p>
+        <h3>Dynamic content</h3>
+        <p>Elements added to the DOM after page load render automatically via <code>connectedCallback</code>.</p>
       </div>
       <div class="feat">
         <div class="feat-icon">🪶</div>
         <h3>Tiny footprint</h3>
-        <p>The entire parser and renderer is ~200 lines of readable JavaScript. Easy to audit, easy to fork.</p>
+        <p>~200 lines of readable JavaScript. Easy to audit, easy to understand, easy to fork.</p>
       </div>
     </div>
   </div>
@@ -410,76 +545,80 @@
 
 <hr class="divider">
 
-<!-- ════════════════════════════════════ USAGE -->
+<!-- ════════════════ USAGE -->
 <section id="usage">
-  <div class="container">
-    <div class="s-eyebrow">Get started</div>
+  <div class="wrap">
+    <span class="eyebrow">Get started</span>
     <h2 class="s-title">Up and running in 3 steps</h2>
-    <p class="s-desc">No configuration required. Add two files and start writing markdown in your HTML.</p>
+    <p class="s-desc">No configuration required. Add two files and start writing markdown anywhere in your HTML.</p>
 
     <div class="steps">
       <div class="step">
-        <div class="step-num">1</div>
-        <div>
-          <h3>Download the files</h3>
-          <p>Grab <code>mark-down.js</code> and <code>mark-down.css</code> and put them in your project. That's the entire install.</p>
-        </div>
+        <div class="step-num">01 &mdash; Download</div>
+        <h3>Grab the files</h3>
+        <p>Download <code>mark-down.js</code> and <code>mark-down.css</code> and place them in your project. That's the entire install.</p>
       </div>
       <div class="step">
-        <div class="step-num">2</div>
-        <div>
-          <h3>Add the script tag</h3>
-          <p>Include <code>mark-down.js</code> in your <code>&lt;head&gt;</code> with <code>defer</code>. The CSS loads automatically from the same folder.</p>
-        </div>
+        <div class="step-num">02 &mdash; Include</div>
+        <h3>Add the script tag</h3>
+        <p>Add <code>mark-down.js</code> to your <code>&lt;head&gt;</code> with <code>defer</code>. The CSS loads automatically from the same folder.</p>
       </div>
       <div class="step">
-        <div class="step-num">3</div>
-        <div>
-          <h3>Write markdown</h3>
-          <p>Place <code>&lt;mark-down&gt;</code> anywhere in your page body, write markdown inside, and open it in a browser.</p>
-        </div>
+        <div class="step-num">03 &mdash; Write</div>
+        <h3>Use the element</h3>
+        <p>Place <code>&lt;mark-down&gt;</code> anywhere in your page body, write markdown inside it, and open in a browser.</p>
       </div>
     </div>
 
-    <pre class="codeblock"><span class="hl-note">&lt;!-- 1. Load the library once in &lt;head&gt; --&gt;</span>
-<span class="hl-tag">&lt;script</span> <span class="hl-attr">src</span>=<span class="hl-val">"mark-down.js"</span> <span class="hl-attr">defer</span><span class="hl-tag">&gt;&lt;/script&gt;</span>
+    <div class="editor">
+      <div class="editor-bar">
+        <div class="editor-dots">
+          <div class="editor-dot"></div>
+          <div class="editor-dot"></div>
+          <div class="editor-dot"></div>
+        </div>
+        <div class="editor-filename">index.html</div>
+      </div>
+      <pre><span class="c">&lt;!-- Load once in &lt;head&gt; --&gt;</span>
+<span class="t">&lt;script</span> <span class="a">src</span>=<span class="v">"mark-down.js"</span> <span class="a">defer</span><span class="t">&gt;&lt;/script&gt;</span>
 
-<span class="hl-note">&lt;!-- 2. Use it anywhere in &lt;body&gt; --&gt;</span>
-<span class="hl-tag">&lt;mark-down&gt;</span>
-  # Hello, World!
+<span class="c">&lt;!-- Use anywhere in &lt;body&gt; --&gt;</span>
+<span class="t">&lt;mark-down&gt;</span>
+<span class="tx">  # Hello, World!
 
   This is **bold**, this is *italic*, and this is `inline code`.
 
-  - One item
-  - Another item
-  - A third item
+  - Item one
+  - Item two
+  - Item three
 
   &gt; A blockquote with *formatted* content inside.
 
   ```js
-  console.log("Hello from a fenced code block!");
-  ```
-<span class="hl-tag">&lt;/mark-down&gt;</span></pre>
+  console.log("Hello from a code block!");
+  ```</span>
+<span class="t">&lt;/mark-down&gt;</span></pre>
+    </div>
   </div>
 </section>
 
 <hr class="divider">
 
-<!-- ════════════════════════════════════ DEMO -->
+<!-- ════════════════ DEMO -->
 <section id="demo">
-  <div class="container">
-    <div class="s-eyebrow">Live demo</div>
+  <div class="wrap">
+    <span class="eyebrow">Live demo</span>
     <h2 class="s-title">See it in action</h2>
     <p class="s-desc">These are real <code>&lt;mark-down&gt;</code> elements rendered by the library right now on this page.</p>
 
     <div class="demo-grid">
 
       <div class="demo-card">
-        <div class="demo-card-bar">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          &nbsp;Headings &amp; inline formatting
+        <div class="demo-bar">
+          <span class="demo-dot"></span><span class="demo-dot"></span><span class="demo-dot"></span>
+          <span class="demo-label">Headings &amp; inline formatting</span>
         </div>
-        <div class="demo-card-body">
+        <div class="demo-body">
           <mark-down>
             # Heading 1
             ## Heading 2
@@ -491,11 +630,11 @@
       </div>
 
       <div class="demo-card">
-        <div class="demo-card-bar">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          &nbsp;Lists
+        <div class="demo-bar">
+          <span class="demo-dot"></span><span class="demo-dot"></span><span class="demo-dot"></span>
+          <span class="demo-label">Lists</span>
         </div>
-        <div class="demo-card-body">
+        <div class="demo-body">
           <mark-down>
             **Unordered list**
 
@@ -513,11 +652,11 @@
       </div>
 
       <div class="demo-card">
-        <div class="demo-card-bar">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          &nbsp;Fenced code block
+        <div class="demo-bar">
+          <span class="demo-dot"></span><span class="demo-dot"></span><span class="demo-dot"></span>
+          <span class="demo-label">Fenced code block</span>
         </div>
-        <div class="demo-card-body">
+        <div class="demo-body">
           <mark-down>
             ```js
             function greet(name) {
@@ -531,11 +670,11 @@
       </div>
 
       <div class="demo-card">
-        <div class="demo-card-bar">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          &nbsp;Blockquote &amp; horizontal rule
+        <div class="demo-bar">
+          <span class="demo-dot"></span><span class="demo-dot"></span><span class="demo-dot"></span>
+          <span class="demo-label">Blockquote &amp; horizontal rule</span>
         </div>
-        <div class="demo-card-body">
+        <div class="demo-body">
           <mark-down>
             > "Any sufficiently advanced technology is
             > indistinguishable from magic."
@@ -543,17 +682,17 @@
 
             ---
 
-            A new paragraph after the rule.
+            A paragraph after the horizontal rule.
           </mark-down>
         </div>
       </div>
 
-      <div class="demo-card demo-full">
-        <div class="demo-card-bar">
-          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-          &nbsp;Table
+      <div class="demo-card demo-wide">
+        <div class="demo-bar">
+          <span class="demo-dot"></span><span class="demo-dot"></span><span class="demo-dot"></span>
+          <span class="demo-label">Table</span>
         </div>
-        <div class="demo-card-body">
+        <div class="demo-body">
           <mark-down>
             | Feature        | Supported | Notes                       |
             | -------------- | :-------: | --------------------------- |
@@ -575,10 +714,10 @@
 
 <hr class="divider">
 
-<!-- ════════════════════════════════════ SYNTAX -->
+<!-- ════════════════ SYNTAX -->
 <section id="syntax">
-  <div class="container">
-    <div class="s-eyebrow">Reference</div>
+  <div class="wrap">
+    <span class="eyebrow">Reference</span>
     <h2 class="s-title">Supported syntax</h2>
     <p class="s-desc">All standard markdown constructs — write it exactly the way you already know.</p>
 
@@ -588,81 +727,21 @@
           <tr><th>Markdown</th><th>Output</th><th>Notes</th></tr>
         </thead>
         <tbody>
-          <tr>
-            <td># Heading 1</td>
-            <td><strong>H1</strong> through <strong>H6</strong></td>
-            <td>One to six <code>#</code> characters followed by a space</td>
-          </tr>
-          <tr>
-            <td>**bold**</td>
-            <td><strong>bold</strong></td>
-            <td>Also works with <code>__double underscores__</code></td>
-          </tr>
-          <tr>
-            <td>*italic*</td>
-            <td><em>italic</em></td>
-            <td>Also works with <code>_single underscores_</code></td>
-          </tr>
-          <tr>
-            <td>***bold italic***</td>
-            <td><strong><em>bold italic</em></strong></td>
-            <td>Triple asterisks for both at once</td>
-          </tr>
-          <tr>
-            <td>~~strikethrough~~</td>
-            <td><del>strikethrough</del></td>
-            <td>Double tildes</td>
-          </tr>
-          <tr>
-            <td>`inline code`</td>
-            <td><code>inline code</code></td>
-            <td>Single backtick; content is HTML-escaped</td>
-          </tr>
-          <tr>
-            <td>```lang … ```</td>
-            <td>Code block</td>
-            <td>Fenced with triple backticks; optional language hint</td>
-          </tr>
-          <tr>
-            <td>- item</td>
-            <td>Unordered list</td>
-            <td>Bullet characters: <code>-</code>, <code>*</code>, or <code>+</code></td>
-          </tr>
-          <tr>
-            <td>1. item</td>
-            <td>Ordered list</td>
-            <td>Any digit followed by a period and space</td>
-          </tr>
-          <tr>
-            <td>&gt; quote</td>
-            <td>Blockquote</td>
-            <td>Markdown renders recursively inside blockquotes</td>
-          </tr>
-          <tr>
-            <td>---</td>
-            <td>Horizontal rule</td>
-            <td>Three or more: <code>---</code>, <code>***</code>, or <code>___</code></td>
-          </tr>
-          <tr>
-            <td>[text](url)</td>
-            <td>Link</td>
-            <td>Standard inline link syntax</td>
-          </tr>
-          <tr>
-            <td>![alt](url)</td>
-            <td>Image</td>
-            <td>Renders responsive with <code>max-width: 100%</code></td>
-          </tr>
-          <tr>
-            <td>| col | col |</td>
-            <td>Table</td>
-            <td>GFM-style pipe table; requires header separator row</td>
-          </tr>
-          <tr>
-            <td>two trailing spaces</td>
-            <td>Line break</td>
-            <td>Hard <code>&lt;br&gt;</code> within a paragraph</td>
-          </tr>
+          <tr><td># Heading 1</td><td><strong>H1</strong> through <strong>H6</strong></td><td>One to six <code>#</code> characters followed by a space</td></tr>
+          <tr><td>**bold**</td><td><strong>bold</strong></td><td>Also works with <code>__double underscores__</code></td></tr>
+          <tr><td>*italic*</td><td><em>italic</em></td><td>Also works with <code>_single underscores_</code></td></tr>
+          <tr><td>***bold italic***</td><td><strong><em>bold italic</em></strong></td><td>Triple asterisks for both at once</td></tr>
+          <tr><td>~~strikethrough~~</td><td><del>strikethrough</del></td><td>Double tildes</td></tr>
+          <tr><td>`inline code`</td><td><code>inline code</code></td><td>Single backtick; content is HTML-escaped</td></tr>
+          <tr><td>```lang … ```</td><td>Code block</td><td>Fenced triple backticks; optional language hint</td></tr>
+          <tr><td>- item</td><td>Unordered list</td><td>Bullet characters: <code>-</code>, <code>*</code>, or <code>+</code></td></tr>
+          <tr><td>1. item</td><td>Ordered list</td><td>Any digit followed by a period and space</td></tr>
+          <tr><td>&gt; quote</td><td>Blockquote</td><td>Markdown renders recursively inside blockquotes</td></tr>
+          <tr><td>---</td><td>Horizontal rule</td><td>Three or more <code>---</code>, <code>***</code>, or <code>___</code></td></tr>
+          <tr><td>[text](url)</td><td>Link</td><td>Standard inline link syntax</td></tr>
+          <tr><td>![alt](url)</td><td>Image</td><td>Renders responsive with <code>max-width: 100%</code></td></tr>
+          <tr><td>| col | col |</td><td>Table</td><td>GFM pipe table with header separator row</td></tr>
+          <tr><td>two trailing spaces</td><td>Line break</td><td>Hard <code>&lt;br&gt;</code> within a paragraph</td></tr>
         </tbody>
       </table>
     </div>
@@ -671,11 +750,27 @@
 
 <hr class="divider">
 
-<!-- ════════════════════════════════════ FOOTER -->
+<!-- ════════════════ CTA -->
+<section style="padding: 5rem 2.5rem;">
+  <div class="wrap">
+    <div class="callout">
+      <div class="callout-logo">&lt;mark-down&gt;</div>
+      <h3>Ready to get started?</h3>
+      <p>Two files. No build step. No npm. Just drop them in and start writing markdown in your HTML today.</p>
+      <div style="display:flex; gap:.7rem; flex-wrap:wrap; justify-content:center">
+        <a href="#usage" class="btn btn-solid">Get started &rarr;</a>
+        <a href="https://github.com" class="btn btn-outline">View on GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ════════════════ FOOTER -->
 <footer>
   <div class="footer-logo">&lt;mark-down&gt;</div>
-  <p>Vanilla JS &nbsp;&middot;&nbsp; Web Components &nbsp;&middot;&nbsp; Zero dependencies &nbsp;&middot;&nbsp; MIT License</p>
-  <div class="footer-links">
+  <div class="footer-right">
     <a href="#features">Features</a>
     <a href="#usage">Usage</a>
     <a href="#demo">Demo</a>
