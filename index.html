@@ -3,117 +3,702 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>mark-down demo</title>
+  <title>mark-down.js — Markdown as a native HTML element</title>
   <script src="mark-down.js" defer></script>
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d1117;
+      --bg2:      #161b22;
+      --bg3:      #21262d;
+      --border:   #30363d;
+      --text:     #e6edf3;
+      --muted:    #8b949e;
+      --accent:   #a371f7;
+      --accent2:  #58a6ff;
+      --green:    #3fb950;
+      --red:      #ff7b72;
+      --purple:   #d2a8ff;
+      --radius:   10px;
+      --mono:     'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: sans-serif;
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-      color: #222;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
-    h1 { color: #333; }
-    .box {
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 1.5rem;
+
+    a { color: var(--accent2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      font-family: var(--mono);
+      font-size: 0.82em;
+      background: rgba(255,255,255,0.08);
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+    }
+
+    /* ── Nav ─────────────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,17,23,0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 1rem; font-weight: 700; letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+    .nav-logo .br { color: var(--red); }
+    .nav-logo .nm { color: var(--purple); }
+
+    .nav-links { display: flex; gap: 1.25rem; align-items: center; }
+    .nav-links a {
+      color: var(--muted); font-size: 0.875rem;
+      transition: color .15s;
+    }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.35em;
+      padding: 0.4em 1em; border-radius: 6px;
+      font-size: 0.875rem; font-weight: 500;
+      transition: all .15s; text-decoration: none; cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn-primary  { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: #b794fa; text-decoration: none; }
+    .btn-outline  { border: 1px solid var(--border); color: var(--text); background: transparent; }
+    .btn-outline:hover { background: var(--bg3); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .nav-hide { display: none; }
+    }
+
+    /* ── Hero ────────────────────────────────────────────── */
+    .hero {
+      text-align: center;
+      padding: 7rem 2rem 6rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 55% at 50% -5%, rgba(163,113,247,.18), transparent);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    .logo-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: clamp(2.2rem, 7vw, 4.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      padding: 0.3em 0.65em;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
       margin-bottom: 2rem;
+      box-shadow: 0 0 0 1px rgba(163,113,247,.1), 0 20px 60px rgba(0,0,0,.4);
+      position: relative;
     }
-    label { font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 0.05em; }
+    .logo-tag .br   { color: var(--red); }
+    .logo-tag .nm   { color: var(--purple); }
+    /* subtle glow under logo */
+    .logo-tag::after {
+      content: '';
+      position: absolute; left: 10%; right: 10%; bottom: -20px; height: 30px;
+      background: rgba(163,113,247,.2);
+      filter: blur(20px);
+      border-radius: 50%;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.4rem, 3.5vw, 2.25rem);
+      font-weight: 700; color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.1rem; color: var(--muted);
+      max-width: 480px; margin: 0 auto 2.5rem;
+    }
+    .hero-ctas {
+      display: flex; gap: .75rem;
+      justify-content: center; flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .snippet-box {
+      display: inline-flex; align-items: center; gap: .75rem;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: .55rem 1rem;
+      font-family: var(--mono); font-size: .875rem;
+      color: var(--muted);
+    }
+    .snippet-box code {
+      background: none; padding: 0; font-size: .875rem; color: var(--text);
+    }
+
+    /* ── Shared section layout ───────────────────────────── */
+    section { padding: 5rem 2rem; }
+    .container { max-width: 1080px; margin: 0 auto; }
+
+    .s-label {
+      font-size: .72rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: .6rem;
+    }
+    .s-title { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; margin-bottom: .75rem; }
+    .s-desc  { color: var(--muted); font-size: 1.05rem; max-width: 540px; margin-bottom: 3rem; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Feature cards ───────────────────────────────────── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    .feat {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem;
+      transition: border-color .2s, transform .2s;
+    }
+    .feat:hover { border-color: rgba(163,113,247,.5); transform: translateY(-3px); }
+    .feat-icon { font-size: 1.4rem; margin-bottom: .6rem; }
+    .feat h3 { font-size: .95rem; font-weight: 600; margin-bottom: .35rem; }
+    .feat p  { font-size: .85rem; color: var(--muted); line-height: 1.55; }
+
+    /* ── Steps ───────────────────────────────────────────── */
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
+    .step  { display: flex; gap: 1rem; }
+    .step-num {
+      flex-shrink: 0; width: 2rem; height: 2rem; border-radius: 50%;
+      background: var(--accent); color: #fff;
+      font-weight: 700; font-size: .85rem;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: .15rem;
+    }
+    .step h3 { font-size: .95rem; font-weight: 600; margin-bottom: .35rem; }
+    .step p  { font-size: .875rem; color: var(--muted); }
+
+    /* ── Highlighted code block ──────────────────────────── */
+    pre.codeblock {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      font-family: var(--mono); font-size: .875rem; line-height: 1.7;
+      margin-top: 2.5rem;
+    }
+    .hl-tag  { color: #7ee787; }
+    .hl-attr { color: #79c0ff; }
+    .hl-val  { color: #a5d6ff; }
+    .hl-text { color: var(--text); }
+    .hl-note { color: var(--muted); font-style: italic; }
+
+    /* ── Demo cards ──────────────────────────────────────── */
+    #demo { background: var(--bg2); }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+    .demo-full { grid-column: 1 / -1; }
+
+    @media (max-width: 680px) {
+      .demo-grid { grid-template-columns: 1fr; }
+      .demo-full { grid-column: 1; }
+    }
+
+    .demo-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .demo-card-bar {
+      background: var(--bg3);
+      border-bottom: 1px solid var(--border);
+      padding: .5rem 1rem;
+      font-size: .72rem; color: var(--muted);
+      font-family: var(--mono);
+      display: flex; align-items: center; gap: .4rem;
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); }
+    .demo-card-body { padding: 1.5rem; }
+
+    /* ── Syntax table ────────────────────────────────────── */
+    .syn-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    table.syn {
+      width: 100%; border-collapse: collapse; font-size: .9rem;
+    }
+    table.syn th, table.syn td {
+      padding: .6rem 1rem;
+      border-bottom: 1px solid var(--border);
+      text-align: left; vertical-align: middle;
+    }
+    table.syn tr:last-child td { border-bottom: none; }
+    table.syn th {
+      background: var(--bg3);
+      font-size: .72rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+    }
+    table.syn td:first-child {
+      font-family: var(--mono); font-size: .8rem;
+      color: var(--purple); white-space: nowrap;
+    }
+    table.syn tr:hover td { background: rgba(255,255,255,.025); }
+
+    /* ── Footer ──────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+      color: var(--muted); font-size: .875rem;
+    }
+    .footer-logo {
+      font-family: var(--mono);
+      font-size: 1.5rem; font-weight: 700;
+      margin-bottom: .75rem;
+      letter-spacing: -0.02em;
+    }
+    footer p { margin-top: .4rem; }
+    footer .footer-links { display: flex; gap: 1.5rem; justify-content: center; margin-top: 1rem; }
+    footer .footer-links a { color: var(--muted); font-size: .875rem; }
+    footer .footer-links a:hover { color: var(--text); }
   </style>
 </head>
 <body>
 
-  <h1>mark-down.js demo</h1>
-  <p>The <code>&lt;mark-down&gt;</code> elements below are rendered by <strong>mark-down.js</strong>.</p>
-
-  <!-- ── Example 1: headings, paragraphs, bold/italic ── -->
-  <div class="box">
-    <label>Headings &amp; inline formatting</label>
-    <mark-down>
-      # Hello, World!
-
-      ## Subheading
-
-      This is a **bold** word, this is *italic*, and this is ***both***.
-      You can also ~~strike through~~ text.
-
-      Plain paragraph with a [link](https://example.com) inside it.
-    </mark-down>
+<!-- ═══════════════════════════════════════════ NAV -->
+<nav>
+  <div class="nav-logo">
+    <span class="br">&lt;</span><span class="nm">mark-down</span><span class="br">&gt;</span>
   </div>
-
-  <!-- ── Example 2: lists ── -->
-  <div class="box">
-    <label>Lists</label>
-    <mark-down>
-      ## Shopping list
-
-      - Apples
-      - Bread
-      - **Cheese** (the good kind)
-
-      ## Steps
-
-      1. Clone the repo
-      2. Add `&lt;script src="mark-down.js"&gt;` to your HTML
-      3. Use `&lt;mark-down&gt;` anywhere
-    </mark-down>
+  <div class="nav-links">
+    <a href="#features" class="nav-hide">Features</a>
+    <a href="#usage"    class="nav-hide">Usage</a>
+    <a href="#demo"     class="nav-hide">Demo</a>
+    <a href="#syntax"   class="nav-hide">Syntax</a>
+    <a href="https://github.com" class="btn btn-outline">
+      <svg height="16" viewBox="0 0 16 16" fill="currentColor" style="flex-shrink:0">
+        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+          0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
+          -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66
+          .07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15
+          -.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0
+          1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82
+          1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01
+          1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+      </svg>
+      GitHub
+    </a>
   </div>
+</nav>
 
-  <!-- ── Example 3: code ── -->
-  <div class="box">
-    <label>Code blocks</label>
-    <mark-down>
-      ## Inline code
-
-      Use `console.log("hello")` to print to the console.
-
-      ## Fenced block
-
-      ```js
-      function greet(name) {
-        return `Hello, ${name}!`;
-      }
-      console.log(greet("world"));
-      ```
-    </mark-down>
+<!-- ═══════════════════════════════════════════ HERO -->
+<section class="hero">
+  <div class="logo-tag">
+    <span class="br">&lt;</span><span class="nm">mark-down</span><span class="br">&gt;</span>
   </div>
-
-  <!-- ── Example 4: blockquote + hr ── -->
-  <div class="box">
-    <label>Blockquote &amp; rule</label>
-    <mark-down>
-      > "Any sufficiently advanced technology is indistinguishable from magic."
-      > — Arthur C. Clarke
-
-      ---
-
-      Another paragraph after the rule.
-    </mark-down>
+  <h1>Markdown as a native HTML element</h1>
+  <p>A zero-dependency vanilla JS library. Drop in two files, use <code>&lt;mark-down&gt;</code> anywhere — it just works.</p>
+  <div class="hero-ctas">
+    <a href="#usage" class="btn btn-primary">Get started &rarr;</a>
+    <a href="#demo"  class="btn btn-outline">See it live</a>
   </div>
-
-  <!-- ── Example 5: table ── -->
-  <div class="box">
-    <label>Table</label>
-    <mark-down>
-      | Name    | Role      | Language   |
-      | ------- | --------- | ---------- |
-      | Alice   | Frontend  | TypeScript |
-      | Bob     | Backend   | Go         |
-      | Charlie | Full-stack| Rust       |
-    </mark-down>
+  <div class="snippet-box">
+    <span style="color:var(--green);font-family:var(--mono);user-select:none">&lt;script</span>
+    <code>src="mark-down.js" defer&gt;&lt;/script&gt;</code>
   </div>
+</section>
 
-  <!-- ── Example 6: image ── -->
-  <div class="box">
-    <label>Image</label>
-    <mark-down>
-      ## Logo
+<hr class="divider">
 
-      ![Placeholder image](https://placehold.co/400x120?text=mark-down.js)
-    </mark-down>
+<!-- ═══════════════════════════════════════════ FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="s-label">Why mark-down.js</div>
+    <h2 class="s-title">Everything you need, nothing you don't</h2>
+    <p class="s-desc">Built on Web Components standards. No build step, no npm, no framework required.</p>
+
+    <div class="features-grid">
+
+      <div class="feat">
+        <div class="feat-icon">⚡</div>
+        <h3>Zero dependencies</h3>
+        <p>Pure vanilla JavaScript. One <code>.js</code> and one <code>.css</code> file. No npm, no bundler, no configuration whatsoever.</p>
+      </div>
+
+      <div class="feat">
+        <div class="feat-icon">🧩</div>
+        <h3>Web Components</h3>
+        <p>Built on the native Custom Elements API. Works in all modern browsers alongside any framework — or no framework at all.</p>
+      </div>
+
+      <div class="feat">
+        <div class="feat-icon">🛡️</div>
+        <h3>Shadow DOM isolation</h3>
+        <p>Rendered inside Shadow DOM so styles never bleed in or out. Page styles and markdown styles stay completely separate.</p>
+      </div>
+
+      <div class="feat">
+        <div class="feat-icon">✂️</div>
+        <h3>Smart auto-dedent</h3>
+        <p>Write naturally indented markdown inside your HTML. The library strips common leading whitespace automatically — no fussing with alignment.</p>
+      </div>
+
+      <div class="feat">
+        <div class="feat-icon">🎨</div>
+        <h3>Inherits your colors</h3>
+        <p>The stylesheet uses <code>currentColor</code> and relative units, adapting seamlessly to your page's text color and font size.</p>
+      </div>
+
+      <div class="feat">
+        <div class="feat-icon">📐</div>
+        <h3>Full markdown syntax</h3>
+        <p>Headings, bold, italic, strikethrough, fenced code, blockquotes, ordered &amp; unordered lists, tables, links, images, and horizontal rules.</p>
+      </div>
+
+      <div class="feat">
+        <div class="feat-icon">🔄</div>
+        <h3>Dynamic content ready</h3>
+        <p>Uses <code>connectedCallback</code> so elements added to the DOM after page load are automatically rendered without any extra setup.</p>
+      </div>
+
+      <div class="feat">
+        <div class="feat-icon">🪶</div>
+        <h3>Tiny footprint</h3>
+        <p>The entire parser and renderer is ~200 lines of readable JavaScript. Easy to audit, easy to fork, easy to understand.</p>
+      </div>
+
+    </div>
   </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════════════ HOW TO USE -->
+<section id="usage">
+  <div class="container">
+    <div class="s-label">Get started</div>
+    <h2 class="s-title">Up and running in 3 steps</h2>
+    <p class="s-desc">No configuration required. Add two files and start writing markdown in your HTML.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3>Download the files</h3>
+          <p>Grab <code>mark-down.js</code> and <code>mark-down.css</code> and place them anywhere in your project. That's all there is to install.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3>Add the script tag</h3>
+          <p>Include <code>mark-down.js</code> in your <code>&lt;head&gt;</code> with <code>defer</code>. The CSS is loaded automatically from the same folder.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3>Write markdown</h3>
+          <p>Place a <code>&lt;mark-down&gt;</code> element anywhere in your page body and write markdown inside it. Open in a browser — done.</p>
+        </div>
+      </div>
+    </div>
+
+    <pre class="codeblock"><span class="hl-note">&lt;!-- 1. Load the library once in &lt;head&gt; --&gt;</span>
+<span class="hl-tag">&lt;script</span> <span class="hl-attr">src</span>=<span class="hl-val">"mark-down.js"</span> <span class="hl-attr">defer</span><span class="hl-tag">&gt;&lt;/script&gt;</span>
+
+<span class="hl-note">&lt;!-- 2. Use it anywhere in your &lt;body&gt; --&gt;</span>
+<span class="hl-tag">&lt;mark-down&gt;</span>
+<span class="hl-text">  # Hello, World!
+
+  This is **bold**, this is *italic*, and this is `inline code`.
+
+  - One item
+  - Another item
+  - A third item
+
+  &gt; A blockquote with *formatted* content inside.
+
+  ```js
+  console.log("Hello from a fenced code block!");
+  ```</span>
+<span class="hl-tag">&lt;/mark-down&gt;</span></pre>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════════════ DEMO -->
+<section id="demo">
+  <div class="container">
+    <div class="s-label">Live demo</div>
+    <h2 class="s-title">See it in action</h2>
+    <p class="s-desc">These are real <code>&lt;mark-down&gt;</code> elements rendered by the library right now on this page.</p>
+
+    <div class="demo-grid">
+
+      <!-- Headings & inline -->
+      <div class="demo-card">
+        <div class="demo-card-bar">
+          <span class="dot"></span>
+          <span class="dot" style="background:var(--red)"></span>
+          <span class="dot" style="background:var(--purple)"></span>
+          &nbsp;Headings &amp; inline formatting
+        </div>
+        <div class="demo-card-body">
+          <mark-down>
+            # Heading 1
+            ## Heading 2
+            ### Heading 3
+
+            **Bold**, *italic*, ***bold italic***, ~~strikethrough~~ and `inline code`.
+          </mark-down>
+        </div>
+      </div>
+
+      <!-- Lists -->
+      <div class="demo-card">
+        <div class="demo-card-bar">
+          <span class="dot"></span>
+          <span class="dot" style="background:var(--red)"></span>
+          <span class="dot" style="background:var(--purple)"></span>
+          &nbsp;Lists
+        </div>
+        <div class="demo-card-body">
+          <mark-down>
+            **Unordered list**
+
+            - Apples
+            - Bread
+            - **Cheese** (the good kind)
+
+            **Ordered list**
+
+            1. Clone the repo
+            2. Add the script tag
+            3. Write markdown
+          </mark-down>
+        </div>
+      </div>
+
+      <!-- Code block -->
+      <div class="demo-card">
+        <div class="demo-card-bar">
+          <span class="dot"></span>
+          <span class="dot" style="background:var(--red)"></span>
+          <span class="dot" style="background:var(--purple)"></span>
+          &nbsp;Fenced code block
+        </div>
+        <div class="demo-card-body">
+          <mark-down>
+            ```js
+            function greet(name) {
+              return `Hello, ${name}!`;
+            }
+
+            console.log(greet("world"));
+            ```
+          </mark-down>
+        </div>
+      </div>
+
+      <!-- Blockquote + rule -->
+      <div class="demo-card">
+        <div class="demo-card-bar">
+          <span class="dot"></span>
+          <span class="dot" style="background:var(--red)"></span>
+          <span class="dot" style="background:var(--purple)"></span>
+          &nbsp;Blockquote &amp; horizontal rule
+        </div>
+        <div class="demo-card-body">
+          <mark-down>
+            > "Any sufficiently advanced technology is
+            > indistinguishable from magic."
+            > — Arthur C. Clarke
+
+            ---
+
+            A new paragraph after the rule.
+          </mark-down>
+        </div>
+      </div>
+
+      <!-- Table — full width -->
+      <div class="demo-card demo-full">
+        <div class="demo-card-bar">
+          <span class="dot"></span>
+          <span class="dot" style="background:var(--red)"></span>
+          <span class="dot" style="background:var(--purple)"></span>
+          &nbsp;Table
+        </div>
+        <div class="demo-card-body">
+          <mark-down>
+            | Feature        | Supported | Notes                       |
+            | -------------- | :-------: | --------------------------- |
+            | Headings H1–H6 | ✅        | `#` through `######`        |
+            | Bold & Italic  | ✅        | `**bold**`, `*italic*`      |
+            | Strikethrough  | ✅        | `~~text~~`                  |
+            | Code blocks    | ✅        | Fenced with language hint   |
+            | Tables         | ✅        | GFM-style pipe syntax       |
+            | Blockquotes    | ✅        | Recursive markdown inside   |
+            | Links & Images | ✅        | Standard markdown syntax    |
+            | Auto-dedent    | ✅        | No indentation headaches    |
+          </mark-down>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════════════ SYNTAX REFERENCE -->
+<section id="syntax">
+  <div class="container">
+    <div class="s-label">Reference</div>
+    <h2 class="s-title">Supported syntax</h2>
+    <p class="s-desc">All standard markdown constructs — write it exactly the way you already know.</p>
+
+    <div class="syn-wrap">
+      <table class="syn">
+        <thead>
+          <tr><th>Markdown</th><th>Output</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td># Heading 1</td>
+            <td><strong>H1</strong> through <strong>H6</strong></td>
+            <td>One to six <code>#</code> characters followed by a space</td>
+          </tr>
+          <tr>
+            <td>**bold**</td>
+            <td><strong>bold</strong></td>
+            <td>Also works with <code>__double underscores__</code></td>
+          </tr>
+          <tr>
+            <td>*italic*</td>
+            <td><em>italic</em></td>
+            <td>Also works with <code>_single underscores_</code></td>
+          </tr>
+          <tr>
+            <td>***bold italic***</td>
+            <td><strong><em>bold italic</em></strong></td>
+            <td>Triple asterisks for both at once</td>
+          </tr>
+          <tr>
+            <td>~~strikethrough~~</td>
+            <td><del>strikethrough</del></td>
+            <td>Double tildes</td>
+          </tr>
+          <tr>
+            <td>`inline code`</td>
+            <td><code>inline code</code></td>
+            <td>Single backtick; content is HTML-escaped</td>
+          </tr>
+          <tr>
+            <td>```lang … ```</td>
+            <td>Code block</td>
+            <td>Fenced with triple backticks; optional language hint</td>
+          </tr>
+          <tr>
+            <td>- item</td>
+            <td>Unordered list</td>
+            <td>Bullet characters: <code>-</code>, <code>*</code>, or <code>+</code></td>
+          </tr>
+          <tr>
+            <td>1. item</td>
+            <td>Ordered list</td>
+            <td>Any digit followed by a period and space</td>
+          </tr>
+          <tr>
+            <td>&gt; quote</td>
+            <td>Blockquote</td>
+            <td>Markdown renders recursively inside blockquotes</td>
+          </tr>
+          <tr>
+            <td>---</td>
+            <td>Horizontal rule</td>
+            <td>Three or more: <code>---</code>, <code>***</code>, or <code>___</code></td>
+          </tr>
+          <tr>
+            <td>[text](url)</td>
+            <td>Link</td>
+            <td>Standard inline link syntax</td>
+          </tr>
+          <tr>
+            <td>![alt](url)</td>
+            <td>Image</td>
+            <td>Renders responsive with <code>max-width: 100%</code></td>
+          </tr>
+          <tr>
+            <td>| col | col |</td>
+            <td>Table</td>
+            <td>GFM-style pipe table; requires header separator row</td>
+          </tr>
+          <tr>
+            <td>two trailing spaces</td>
+            <td>Line break</td>
+            <td>Hard <code>&lt;br&gt;</code> within a paragraph</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════════════════════════════════════ FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <span style="color:var(--red)">&lt;</span><span style="color:var(--purple)">mark-down</span><span style="color:var(--red)">&gt;</span>
+  </div>
+  <p>Vanilla JS &nbsp;·&nbsp; Web Components &nbsp;·&nbsp; Zero dependencies &nbsp;·&nbsp; MIT License</p>
+  <div class="footer-links">
+    <a href="#features">Features</a>
+    <a href="#usage">Usage</a>
+    <a href="#demo">Demo</a>
+    <a href="#syntax">Syntax</a>
+    <a href="https://github.com">GitHub</a>
+  </div>
+</footer>
 
 </body>
 </html>
