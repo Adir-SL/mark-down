@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mark-down demo</title>
+  <script src="mark-down.js" defer></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      color: #222;
+    }
+    h1 { color: #333; }
+    .box {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    label { font-size: 0.8rem; color: #888; text-transform: uppercase; letter-spacing: 0.05em; }
+  </style>
+</head>
+<body>
+
+  <h1>mark-down.js demo</h1>
+  <p>The <code>&lt;mark-down&gt;</code> elements below are rendered by <strong>mark-down.js</strong>.</p>
+
+  <!-- ── Example 1: headings, paragraphs, bold/italic ── -->
+  <div class="box">
+    <label>Headings &amp; inline formatting</label>
+    <mark-down>
+      # Hello, World!
+
+      ## Subheading
+
+      This is a **bold** word, this is *italic*, and this is ***both***.
+      You can also ~~strike through~~ text.
+
+      Plain paragraph with a [link](https://example.com) inside it.
+    </mark-down>
+  </div>
+
+  <!-- ── Example 2: lists ── -->
+  <div class="box">
+    <label>Lists</label>
+    <mark-down>
+      ## Shopping list
+
+      - Apples
+      - Bread
+      - **Cheese** (the good kind)
+
+      ## Steps
+
+      1. Clone the repo
+      2. Add `&lt;script src="mark-down.js"&gt;` to your HTML
+      3. Use `&lt;mark-down&gt;` anywhere
+    </mark-down>
+  </div>
+
+  <!-- ── Example 3: code ── -->
+  <div class="box">
+    <label>Code blocks</label>
+    <mark-down>
+      ## Inline code
+
+      Use `console.log("hello")` to print to the console.
+
+      ## Fenced block
+
+      ```js
+      function greet(name) {
+        return `Hello, ${name}!`;
+      }
+      console.log(greet("world"));
+      ```
+    </mark-down>
+  </div>
+
+  <!-- ── Example 4: blockquote + hr ── -->
+  <div class="box">
+    <label>Blockquote &amp; rule</label>
+    <mark-down>
+      > "Any sufficiently advanced technology is indistinguishable from magic."
+      > — Arthur C. Clarke
+
+      ---
+
+      Another paragraph after the rule.
+    </mark-down>
+  </div>
+
+  <!-- ── Example 5: table ── -->
+  <div class="box">
+    <label>Table</label>
+    <mark-down>
+      | Name    | Role      | Language   |
+      | ------- | --------- | ---------- |
+      | Alice   | Frontend  | TypeScript |
+      | Bob     | Backend   | Go         |
+      | Charlie | Full-stack| Rust       |
+    </mark-down>
+  </div>
+
+  <!-- ── Example 6: image ── -->
+  <div class="box">
+    <label>Image</label>
+    <mark-down>
+      ## Logo
+
+      ![Placeholder image](https://placehold.co/400x120?text=mark-down.js)
+    </mark-down>
+  </div>
+
+</body>
+</html>
