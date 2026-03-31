@@ -103,11 +103,9 @@
 
     /* ── Hero ─────────────────────────────────────────────────── */
     .hero {
-      text-align: center;
-      padding: 9rem 2rem 8rem;
+      padding: 6rem 3rem 6rem;
       position: relative;
       overflow: hidden;
-      /* warm parchment gradient base */
       background: linear-gradient(160deg, #fdfcfa 0%, #f7f4ef 55%, #faf9f7 100%);
     }
 
@@ -115,67 +113,85 @@
     .hero::before {
       content: '';
       position: absolute; inset: 0;
-      background-image: radial-gradient(circle, rgba(180,170,155,.55) 1px, transparent 1px);
+      background-image: radial-gradient(circle, rgba(180,170,155,.5) 1px, transparent 1px);
       background-size: 26px 26px;
       pointer-events: none;
     }
-    /* vignette — fades the grid and adds depth */
+    /* vignette */
     .hero::after {
       content: '';
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse 80% 70% at 50% 35%, rgba(253,252,250,.96) 30%, transparent 100%),
-        linear-gradient(to bottom, transparent 40%, rgba(247,244,239,.98) 100%);
+        radial-gradient(ellipse 60% 90% at 30% 50%, rgba(253,252,250,.97) 20%, transparent 80%),
+        linear-gradient(to bottom, transparent 50%, rgba(247,244,239,.98) 100%);
       pointer-events: none;
     }
 
     .hero-inner {
       position: relative; z-index: 1;
-      display: flex; flex-direction: column; align-items: center;
+      max-width: 1160px; margin: 0 auto;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 4rem;
+    }
+
+    /* ── left column: text ── */
+    .hero-text {
+      flex: 0 0 auto;
+      width: 360px;
+      display: flex; flex-direction: column; align-items: flex-start;
     }
 
     .logo-tag {
       font-family: var(--mono);
       font-weight: 500;
-      font-size: clamp(2.2rem, 7vw, 4.5rem);
+      font-size: clamp(1.6rem, 3.5vw, 2.6rem);
       color: var(--text);
       letter-spacing: -.04em;
       line-height: 1;
-      margin-bottom: 2.25rem;
+      margin-bottom: 1.75rem;
     }
     .logo-tag .br { color: var(--sub); }
 
     .hero h1 {
-      font-size: clamp(1.75rem, 4.5vw, 3rem);
+      font-size: clamp(1.6rem, 3vw, 2.25rem);
       font-weight: 700;
       letter-spacing: -.045em;
-      line-height: 1.15;
+      line-height: 1.18;
       color: var(--text);
-      max-width: 600px;
-      margin-bottom: 1rem;
+      margin-bottom: .9rem;
     }
     .hero h1 em { font-style: normal; color: var(--sub); }
 
     .hero p {
-      font-size: 1.05rem;
+      font-size: 1rem;
       color: var(--sub);
-      max-width: 420px;
-      margin-bottom: 2.25rem;
+      margin-bottom: 2rem;
       line-height: 1.65;
     }
 
     .hero-ctas {
-      display: flex; gap: .65rem;
-      justify-content: center; flex-wrap: wrap;
-      margin-bottom: 3.5rem;
+      display: flex; gap: .65rem; flex-wrap: wrap;
+    }
+
+    @media (max-width: 1000px) {
+      .hero { padding: 2rem; }
+      .hero-inner { flex-direction: column; align-items: flex-start; gap: 2.5rem; }
+      .hero-text { width: 100%; }
+      .hero::after {
+        background:
+          radial-gradient(ellipse 100% 60% at 50% 20%, rgba(253,252,250,.97) 20%, transparent 80%),
+          linear-gradient(to bottom, transparent 50%, rgba(247,244,239,.98) 100%);
+      }
     }
 
     /* ── Hero demo panel ──────────────────────────────────────── */
     .hero-demo {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      width: 100%;
-      max-width: 880px;
+      flex: 1;
+      min-width: 0;
       border: 1px solid var(--border-md);
       border-radius: 14px;
       overflow: hidden;
@@ -186,6 +202,7 @@
     .hero-demo-pane {
       background: var(--bg);
       display: flex; flex-direction: column;
+      min-width: 0;
     }
     .hero-demo-pane + .hero-demo-pane {
       border-left: 1px solid var(--border);
@@ -203,6 +220,37 @@
     .hero-demo-title {
       font-size: .72rem; color: var(--dim);
       font-family: var(--mono);
+    }
+
+    /* ── Mobile tabs ── */
+    .hero-demo-tabs {
+      display: none;
+      grid-column: 1 / -1;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-tab {
+      flex: 1; padding: .65rem 1rem;
+      background: none; border: none;
+      border-bottom: 2px solid transparent;
+      font-family: var(--mono); font-size: .75rem; font-weight: 500;
+      color: var(--dim); cursor: pointer;
+      transition: color .15s, background .15s, border-color .15s;
+    }
+    .hero-tab:hover { color: var(--sub); background: var(--bg-hover); }
+    .hero-tab.active {
+      color: var(--text);
+      background: var(--bg);
+      border-bottom-color: var(--text);
+    }
+
+    @media (max-width: 1000px) {
+      .hero-demo { width: 100%; grid-template-columns: 1fr; }
+      .hero-demo-tabs { display: flex; }
+      .hero-demo-pane { grid-column: 1; }
+      .hero-demo-pane:not(.active) { display: none; }
+      .hero-demo-bar { display: none; } /* tabs replace the individual window bars */
+      .hero-demo-pane + .hero-demo-pane { border-left: none; }
     }
 
     .hero-demo-code {
@@ -483,19 +531,29 @@
 <!-- ════════════════ HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="logo-tag"><span class="br">&lt;</span>mark-down<span class="br">&gt;</span></div>
-    <h1>Markdown as a<br><em>native HTML element</em></h1>
-    <p>Drop in two files, write markdown directly in your HTML — no build step, no npm, no configuration.</p>
-    <div class="hero-ctas">
-      <a href="#usage" class="btn btn-solid">Get started &rarr;</a>
-      <a href="#demo"  class="btn btn-outline">See it live</a>
+
+    <!-- left: text -->
+    <div class="hero-text">
+      <div class="logo-tag"><span class="br">&lt;</span>mark-down<span class="br">&gt;</span></div>
+      <h1>Markdown as a<br><em>native HTML element</em></h1>
+      <p>Drop in two files, write markdown directly in your HTML. no build step, no npm, no configuration.</p>
+      <div class="hero-ctas">
+        <a href="#usage" class="btn btn-solid">Get started &rarr;</a>
+        <a href="#demo"  class="btn btn-outline">See it live</a>
+      </div>
     </div>
 
-    <!-- split demo panel -->
+    <!-- right: split demo panel -->
     <div class="hero-demo">
 
+      <!-- mobile tab bar -->
+      <div class="hero-demo-tabs" role="tablist">
+        <button class="hero-tab active" data-pane="0">index.html</button>
+        <button class="hero-tab"        data-pane="1">Preview</button>
+      </div>
+
       <!-- left: code -->
-      <div class="hero-demo-pane">
+      <div class="hero-demo-pane active">
         <div class="hero-demo-bar">
           <div class="hero-demo-dots">
             <div class="hero-demo-dot"></div>
@@ -840,5 +898,21 @@
   </div>
 </footer>
 
+<script>
+  document.querySelectorAll('.hero-demo-tabs').forEach(function(tabBar) {
+    tabBar.addEventListener('click', function(e) {
+      var tab = e.target.closest('.hero-tab');
+      if (!tab) return;
+      var idx = parseInt(tab.dataset.pane);
+      var demo = tabBar.closest('.hero-demo');
+      demo.querySelectorAll('.hero-tab').forEach(function(t, i) {
+        t.classList.toggle('active', i === idx);
+      });
+      demo.querySelectorAll('.hero-demo-pane').forEach(function(p, i) {
+        p.classList.toggle('active', i === idx);
+      });
+    });
+  });
+</script>
 </body>
 </html>
