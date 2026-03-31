@@ -134,44 +134,16 @@
       display: flex; flex-direction: column; align-items: center;
     }
 
-    /* small badge above logo */
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: .5rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: .3em .9em;
-      font-size: .72rem; font-weight: 500;
-      color: var(--sub);
-      letter-spacing: .01em;
-      margin-bottom: 2.25rem;
-      box-shadow: var(--shadow-sm);
-    }
-    .hero-badge-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--border-md);
-      flex-shrink: 0;
-    }
-
     .logo-tag {
-      display: inline-block;
       font-family: var(--mono);
       font-weight: 500;
       font-size: clamp(2.2rem, 7vw, 4.5rem);
       color: var(--text);
       letter-spacing: -.04em;
       line-height: 1;
-      padding: .4em .75em;
-      background: var(--bg);
-      /* layered border: outer glow + crisp inner border */
-      border: 1.5px solid var(--border-md);
-      border-radius: 16px;
-      box-shadow:
-        0 0 0 6px rgba(205,200,192,.18),
-        0 0 0 12px rgba(205,200,192,.08),
-        var(--shadow-lg);
-      margin-bottom: 2.75rem;
+      margin-bottom: 2.25rem;
     }
+    .logo-tag .br { color: var(--sub); }
 
     .hero h1 {
       font-size: clamp(1.75rem, 4.5vw, 3rem);
@@ -180,41 +152,80 @@
       line-height: 1.15;
       color: var(--text);
       max-width: 600px;
-      margin-bottom: 1.1rem;
+      margin-bottom: 1rem;
     }
-    .hero h1 em {
-      font-style: normal;
-      color: var(--sub);
-    }
+    .hero h1 em { font-style: normal; color: var(--sub); }
 
     .hero p {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: var(--sub);
       max-width: 420px;
-      margin-bottom: 2.5rem;
-      font-weight: 400;
+      margin-bottom: 2.25rem;
       line-height: 1.65;
     }
 
     .hero-ctas {
       display: flex; gap: .65rem;
       justify-content: center; flex-wrap: wrap;
-      margin-bottom: 2.75rem;
+      margin-bottom: 3.5rem;
     }
 
-    .pill {
-      display: inline-flex; align-items: center; gap: .5rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: .55rem 1.1rem;
-      font-family: var(--mono); font-size: .79rem;
-      color: var(--sub);
-      box-shadow: var(--shadow-sm);
+    /* ── Hero demo panel ──────────────────────────────────────── */
+    .hero-demo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+      max-width: 880px;
+      border: 1px solid var(--border-md);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      text-align: left;
     }
-    .pill code {
-      background: none; border: none; padding: 0;
-      font-size: .79rem; color: var(--text);
+
+    .hero-demo-pane {
+      background: var(--bg);
+      display: flex; flex-direction: column;
+    }
+    .hero-demo-pane + .hero-demo-pane {
+      border-left: 1px solid var(--border);
+    }
+
+    .hero-demo-bar {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: .55rem 1rem;
+      display: flex; align-items: center; gap: .75rem;
+      flex-shrink: 0;
+    }
+    .hero-demo-dots { display: flex; gap: .35rem; }
+    .hero-demo-dot  { width: 10px; height: 10px; border-radius: 50%; background: var(--border-md); }
+    .hero-demo-title {
+      font-size: .72rem; color: var(--dim);
+      font-family: var(--mono);
+    }
+
+    .hero-demo-code {
+      padding: 1.4rem 1.6rem;
+      font-family: var(--mono); font-size: .79rem;
+      line-height: 1.8; overflow-x: auto;
+      white-space: pre;
+      flex: 1;
+    }
+    .hd-tag  { color: #448361; }
+    .hd-attr { color: #7a6b3e; }
+    .hd-val  { color: #6f5eae; }
+    .hd-md   { color: var(--sub); }
+    .hd-b    { color: var(--text); font-weight: 600; }
+
+    .hero-demo-preview {
+      padding: 1.4rem 1.75rem;
+      flex: 1;
+    }
+
+    @media (max-width: 700px) {
+      .hero-demo { grid-template-columns: 1fr; }
+      .hero-demo-pane + .hero-demo-pane { border-left: none; border-top: 1px solid var(--border); }
     }
 
     /* ── Shared ───────────────────────────────────────────────── */
@@ -472,19 +483,73 @@
 <!-- ════════════════ HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-badge">
-      <span class="hero-badge-dot"></span>
-      Web Components &nbsp;&middot;&nbsp; Zero dependencies &nbsp;&middot;&nbsp; Vanilla JS
-    </div>
-    <div class="logo-tag">&lt;mark-down&gt;</div>
+    <div class="logo-tag"><span class="br">&lt;</span>mark-down<span class="br">&gt;</span></div>
     <h1>Markdown as a<br><em>native HTML element</em></h1>
     <p>Drop in two files, write markdown directly in your HTML — no build step, no npm, no configuration.</p>
     <div class="hero-ctas">
       <a href="#usage" class="btn btn-solid">Get started &rarr;</a>
       <a href="#demo"  class="btn btn-outline">See it live</a>
     </div>
-    <div class="pill">
-      <code>&lt;script src="mark-down.js" defer&gt;&lt;/script&gt;</code>
+
+    <!-- split demo panel -->
+    <div class="hero-demo">
+
+      <!-- left: code -->
+      <div class="hero-demo-pane">
+        <div class="hero-demo-bar">
+          <div class="hero-demo-dots">
+            <div class="hero-demo-dot"></div>
+            <div class="hero-demo-dot"></div>
+            <div class="hero-demo-dot"></div>
+          </div>
+          <span class="hero-demo-title">index.html</span>
+        </div>
+        <div class="hero-demo-code"><span class="hd-tag">&lt;html&gt;</span>
+  <span class="hd-tag">&lt;body&gt;</span>
+    <span class="hd-tag">&lt;div</span> <span class="hd-attr">class</span>=<span class="hd-val">"content"</span><span class="hd-tag">&gt;</span>
+
+      <span class="hd-tag">&lt;mark-down&gt;</span>
+<span class="hd-b">        # Hello, World!</span>
+
+<span class="hd-md">        Welcome to </span><span class="hd-b">**mark-down.js**</span><span class="hd-md"> — a tiny</span>
+<span class="hd-md">        library that renders </span><span class="hd-b">*markdown*</span>
+<span class="hd-md">        as a native HTML element.</span>
+
+<span class="hd-md">        - Zero dependencies</span>
+<span class="hd-md">        - Shadow DOM isolated</span>
+<span class="hd-md">        - Works everywhere</span>
+      <span class="hd-tag">&lt;/mark-down&gt;</span>
+
+    <span class="hd-tag">&lt;/div&gt;</span>
+  <span class="hd-tag">&lt;/body&gt;</span>
+<span class="hd-tag">&lt;/html&gt;</span></div>
+      </div>
+
+      <!-- right: live preview -->
+      <div class="hero-demo-pane">
+        <div class="hero-demo-bar">
+          <div class="hero-demo-dots">
+            <div class="hero-demo-dot"></div>
+            <div class="hero-demo-dot"></div>
+            <div class="hero-demo-dot"></div>
+          </div>
+          <span class="hero-demo-title">Preview</span>
+        </div>
+        <div class="hero-demo-preview">
+          <mark-down>
+            # Hello, World!
+
+            Welcome to **mark-down.js** — a tiny
+            library that renders *markdown*
+            as a native HTML element.
+
+            - Zero dependencies
+            - Shadow DOM isolated
+            - Works everywhere
+          </mark-down>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
