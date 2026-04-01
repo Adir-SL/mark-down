@@ -473,6 +473,21 @@
     }
     table.syn tr:hover td { background: var(--bg-soft); }
 
+    /* ── Download links ───────────────────────────────────────── */
+    .dl-link {
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background .15s, box-shadow .15s;
+    }
+    .dl-link:hover {
+      background: var(--bg-hover);
+      box-shadow: 0 0 0 3px var(--bg-hover);
+    }
+    .dl-link:hover code {
+      background: transparent;
+      border-color: var(--border-md);
+    }
+
     /* ── Callout strip ────────────────────────────────────────── */
     .callout {
       background: var(--bg-soft);
@@ -690,7 +705,7 @@
       <div class="step">
         <div class="step-num">01 &mdash; Download</div>
         <h3>Grab the files</h3>
-        <p>Download <a href="mark-down.js" download><code>mark-down.js</code></a> and <a href="mark-down.css" download><code>mark-down.css</code></a> and place them in your project. That's the entire install.</p>
+        <p>Download <a href="mark-down.js" download class="dl-link"><code>mark-down.js</code></a> and <a href="mark-down.css" download class="dl-link"><code>mark-down.css</code></a> and place them in your project. That's the entire install.</p>
       </div>
       <div class="step">
         <div class="step-num">02 &mdash; Include</div>
