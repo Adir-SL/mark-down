@@ -103,25 +103,21 @@
         continue;
       }
 
-      // Unordered list
-      if (/^[-*+]\s/.test(line)) {
-        const items = [];
-        while (i < lines.length && /^[-*+]\s/.test(lines[i])) {
-          items.push('<li>' + inlineFormat(lines[i].replace(/^[-*+]\s/, ''), inlineCodes) + '</li>');
-          i++;
+      // Unordered or ordered list (including nested)
+      if (/^[-*+]\s/.test(line) || /^\d+\.\s/.test(line)) {
+        const listLines = [line];
+        i++;
+        while (i < lines.length) {
+          const l = lines[i];
+          if (l.trim() === '') break;
+          if (/^\s+/.test(l) || /^[-*+]\s/.test(l) || /^\d+\.\s/.test(l)) {
+            listLines.push(l);
+            i++;
+          } else {
+            break;
+          }
         }
-        output.push('<ul>' + items.join('') + '</ul>');
-        continue;
-      }
-
-      // Ordered list
-      if (/^\d+\.\s/.test(line)) {
-        const items = [];
-        while (i < lines.length && /^\d+\.\s/.test(lines[i])) {
-          items.push('<li>' + inlineFormat(lines[i].replace(/^\d+\.\s/, ''), inlineCodes) + '</li>');
-          i++;
-        }
-        output.push('<ol>' + items.join('') + '</ol>');
+        output.push(parseListLines(listLines, inlineCodes));
         continue;
       }
 
@@ -187,6 +183,67 @@
     });
 
     return html;
+  }
+
+  function parseListLines(lines, inlineCodes) {
+    const firstLine = lines[0] || '';
+    const isOrdered = /^\s*\d+\.\s/.test(firstLine);
+    const tag = isOrdered ? 'ol' : 'ul';
+    const baseIndent = (firstLine.match(/^(\s*)/) || ['', ''])[1].length;
+    const items = [];
+    let i = 0;
+
+    while (i < lines.length) {
+      const line = lines[i];
+      if (line.trim() === '') { i++; continue; }
+
+      const lineIndent = (line.match(/^(\s*)/) || ['', ''])[1].length;
+      const isItem = /^\s*([-*+]|\d+\.)\s/.test(line);
+
+      if (isItem && lineIndent === baseIndent) {
+        const content = line.replace(/^\s*([-*+]|\d+\.)\s/, '');
+        i++;
+
+        // Collect indented sub-lines (nested list content)
+        const subLines = [];
+        while (i < lines.length) {
+          const next = lines[i];
+          if (next.trim() === '') { i++; continue; }
+          const nextIndent = (next.match(/^(\s*)/) || ['', ''])[1].length;
+          if (nextIndent > baseIndent) {
+            subLines.push(next);
+            i++;
+          } else {
+            break;
+          }
+        }
+
+        // Task list item: - [ ] or - [x]
+        const taskMatch = content.match(/^\[( |x|X)\]\s+(.*)$/);
+        let itemHtml;
+        let isTask = false;
+        if (taskMatch) {
+          isTask = true;
+          const checked = taskMatch[1].toLowerCase() === 'x';
+          itemHtml = '<input type="checkbox" disabled' + (checked ? ' checked' : '') + '> ' +
+                     inlineFormat(taskMatch[2], inlineCodes);
+        } else {
+          itemHtml = inlineFormat(content, inlineCodes);
+        }
+
+        if (subLines.length > 0) {
+          itemHtml += parseListLines(subLines, inlineCodes);
+        }
+
+        items.push(
+          (isTask ? '<li class="task-list-item">' : '<li>') + itemHtml + '</li>'
+        );
+      } else {
+        i++;
+      }
+    }
+
+    return '<' + tag + '>' + items.join('') + '</' + tag + '>';
   }
 
   function parseTableRow(line) {

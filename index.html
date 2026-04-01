@@ -661,7 +661,7 @@
       <div class="feat">
         <div class="feat-icon">📐</div>
         <h3>Full markdown syntax</h3>
-        <p>Headings, bold, italic, strikethrough, code blocks, blockquotes, callouts, lists, tables, links, and images.</p>
+        <p>Headings, bold, italic, strikethrough, code blocks, blockquotes, callouts, nested lists, task lists, tables, links, and images.</p>
       </div>
       <div class="feat">
         <div class="feat-icon">🔄</div>
@@ -766,7 +766,7 @@
       <div class="demo-card">
         <div class="demo-bar">
           <span class="demo-dot"></span><span class="demo-dot"></span><span class="demo-dot"></span>
-          <span class="demo-label">Lists</span>
+          <span class="demo-label">Lists &amp; nested lists</span>
         </div>
         <div class="demo-body">
           <mark-down>
@@ -774,13 +774,35 @@
 
             - Apples
             - Bread
+              - Sourdough
+              - Rye
             - **Cheese** (the good kind)
 
             **Ordered list**
 
             1. Clone the repo
-            2. Add the script tag
+            2. Add the files
+               - `mark-down.js`
+               - `mark-down.css`
             3. Write markdown
+          </mark-down>
+        </div>
+      </div>
+
+      <div class="demo-card">
+        <div class="demo-bar">
+          <span class="demo-dot"></span><span class="demo-dot"></span><span class="demo-dot"></span>
+          <span class="demo-label">Task lists</span>
+        </div>
+        <div class="demo-body">
+          <mark-down>
+            **Project checklist**
+
+            - [x] Set up the repository
+            - [x] Add `mark-down.js` and `mark-down.css`
+            - [x] Write some markdown
+            - [ ] Write documentation
+            - [ ] Deploy to production
           </mark-down>
         </div>
       </div>
@@ -836,6 +858,8 @@
             | Code blocks    | ✅        | Fenced with language hint   |
             | Tables         | ✅        | GFM-style pipe syntax       |
             | Blockquotes    | ✅        | Recursive markdown inside   |
+            | Nested lists   | ✅        | Indent 2+ spaces for sub-items |
+            | Task lists     | ✅        | `[ ]` unchecked, `[x]` checked |
             | Callouts       | ✅        | GitHub-style `[!NOTE]` alerts |
             | Links & Images | ✅        | Standard markdown syntax    |
             | Auto-dedent    | ✅        | No indentation headaches    |
@@ -896,6 +920,8 @@
           <tr><td>```lang … ```</td><td>Code block</td><td>Fenced triple backticks; optional language hint</td></tr>
           <tr><td>- item</td><td>Unordered list</td><td>Bullet characters: <code>-</code>, <code>*</code>, or <code>+</code></td></tr>
           <tr><td>1. item</td><td>Ordered list</td><td>Any digit followed by a period and space</td></tr>
+          <tr><td>&nbsp;&nbsp;- sub-item</td><td>Nested list</td><td>Indent sub-items with 2+ spaces; can mix ordered and unordered</td></tr>
+          <tr><td>- [ ] task</td><td>Task list</td><td><code>[ ]</code> unchecked, <code>[x]</code> checked; nests and mixes freely</td></tr>
           <tr><td>&gt; quote</td><td>Blockquote</td><td>Markdown renders recursively inside blockquotes</td></tr>
           <tr><td>&gt; [!NOTE]</td><td>Callout</td><td>GitHub-style alerts: <code>NOTE</code>, <code>TIP</code>, <code>IMPORTANT</code>, <code>WARNING</code>, <code>CAUTION</code></td></tr>
           <tr><td>---</td><td>Horizontal rule</td><td>Three or more <code>---</code>, <code>***</code>, or <code>___</code></td></tr>
