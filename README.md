@@ -76,7 +76,10 @@ Then use `<mark-down>` anywhere in your `<body>`:
 | ```` ```lang … ``` ```` | Code block | Fenced; optional language hint |
 | `- item` | Unordered list | Also `*` and `+` |
 | `1. item` | Ordered list | Any digit + period |
+| `··- sub-item` | Nested list | Indent sub-items with 2+ spaces; mix ordered and unordered |
+| `- [ ] task` | Task list | `[ ]` unchecked, `[x]` checked |
 | `> quote` | Blockquote | Markdown renders recursively inside |
+| `> [!NOTE]` | Callout | `NOTE`, `TIP`, `IMPORTANT`, `WARNING`, or `CAUTION` |
 | `---` | Horizontal rule | Also `***` and `___` |
 | `[text](url)` | Link | Standard inline link |
 | `![alt](url)` | Image | Responsive, `max-width: 100%` |
@@ -111,6 +114,49 @@ Write naturally indented markdown inside your HTML without worrying about leadin
 
 ### Inherits your color scheme
 The default stylesheet uses `currentColor` and relative (`em`) units, so the rendered markdown adapts to your page's text color and font size without any extra configuration.
+
+### Nested lists
+Sub-lists are created by indenting items by 2 or more spaces. You can nest to any depth and freely mix ordered and unordered lists at each level:
+
+```markdown
+- Fruit
+  - Apples
+  - Bananas
+- Bread
+  1. Slice it
+  2. Toast it
+```
+
+### Task lists
+Use `- [ ]` for an unchecked item and `- [x]` for a checked one. Task list items can be nested just like regular list items:
+
+```markdown
+- [x] Download mark-down.js and mark-down.css
+- [x] Add the script tag
+- [ ] Write some markdown
+  - [ ] Try a task list
+  - [ ] Try a callout
+```
+
+### Callouts
+GitHub-style alerts are written as a blockquote whose first line is `[!TYPE]`. Five types are supported — each renders with its own icon and color:
+
+```markdown
+> [!NOTE]
+> Highlights information users should take into account.
+
+> [!TIP]
+> Optional info to help a user be more successful.
+
+> [!IMPORTANT]
+> Crucial information necessary for users to succeed.
+
+> [!WARNING]
+> Critical content demanding immediate user attention.
+
+> [!CAUTION]
+> Negative potential consequences of an action.
+```
 
 ### Dynamic content ready
 The element uses `connectedCallback`, so `<mark-down>` elements added to the DOM dynamically (e.g. via JavaScript) are rendered automatically — no manual initialization needed.
