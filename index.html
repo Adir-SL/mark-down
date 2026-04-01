@@ -661,7 +661,7 @@
       <div class="feat">
         <div class="feat-icon">📐</div>
         <h3>Full markdown syntax</h3>
-        <p>Headings, bold, italic, strikethrough, code blocks, blockquotes, lists, tables, links, and images.</p>
+        <p>Headings, bold, italic, strikethrough, code blocks, blockquotes, callouts, lists, tables, links, and images.</p>
       </div>
       <div class="feat">
         <div class="feat-icon">🔄</div>
@@ -836,8 +836,34 @@
             | Code blocks    | ✅        | Fenced with language hint   |
             | Tables         | ✅        | GFM-style pipe syntax       |
             | Blockquotes    | ✅        | Recursive markdown inside   |
+            | Callouts       | ✅        | GitHub-style `[!NOTE]` alerts |
             | Links & Images | ✅        | Standard markdown syntax    |
             | Auto-dedent    | ✅        | No indentation headaches    |
+          </mark-down>
+        </div>
+      </div>
+
+      <div class="demo-card demo-wide">
+        <div class="demo-bar">
+          <span class="demo-dot"></span><span class="demo-dot"></span><span class="demo-dot"></span>
+          <span class="demo-label">Callouts</span>
+        </div>
+        <div class="demo-body">
+          <mark-down>
+            > [!NOTE]
+            > Highlights information that users should take into account, even when skimming.
+
+            > [!TIP]
+            > Optional information to help a user be more successful.
+
+            > [!IMPORTANT]
+            > Crucial information necessary for users to succeed.
+
+            > [!WARNING]
+            > Critical content demanding immediate user attention due to potential risks.
+
+            > [!CAUTION]
+            > Negative potential consequences of an action.
           </mark-down>
         </div>
       </div>
@@ -871,6 +897,7 @@
           <tr><td>- item</td><td>Unordered list</td><td>Bullet characters: <code>-</code>, <code>*</code>, or <code>+</code></td></tr>
           <tr><td>1. item</td><td>Ordered list</td><td>Any digit followed by a period and space</td></tr>
           <tr><td>&gt; quote</td><td>Blockquote</td><td>Markdown renders recursively inside blockquotes</td></tr>
+          <tr><td>&gt; [!NOTE]</td><td>Callout</td><td>GitHub-style alerts: <code>NOTE</code>, <code>TIP</code>, <code>IMPORTANT</code>, <code>WARNING</code>, <code>CAUTION</code></td></tr>
           <tr><td>---</td><td>Horizontal rule</td><td>Three or more <code>---</code>, <code>***</code>, or <code>___</code></td></tr>
           <tr><td>[text](url)</td><td>Link</td><td>Standard inline link syntax</td></tr>
           <tr><td>![alt](url)</td><td>Image</td><td>Renders responsive with <code>max-width: 100%</code></td></tr>
