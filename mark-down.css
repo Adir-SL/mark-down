@@ -165,10 +165,13 @@
   width: 100%;
   margin-bottom: 1em;
   font-size: 0.95em;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px #c8c8c8 inset;
 }
 .markdown-body th,
 .markdown-body td {
-  border: 1px solid rgba(128, 128, 128, 0.4);
+  border: 1px solid #c8c8c8;
   padding: 0.5em 0.75em;
   text-align: left;
 }
