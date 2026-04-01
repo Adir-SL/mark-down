@@ -113,6 +113,38 @@
   border-radius: 4px;
 }
 
+/* Callouts (GitHub-style alerts) */
+.markdown-body .callout {
+  margin: 0 0 1em 0;
+  padding: 0.75em 1em;
+  border-radius: 6px;
+  border: 1px solid;
+}
+.markdown-body .callout-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  margin: 0 0 0.5em 0;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.markdown-body .callout-title svg { flex-shrink: 0; }
+.markdown-body .callout > :last-child { margin-bottom: 0; }
+
+.markdown-body .callout-note      { border-color: #0969da; background: rgba(9,105,218,0.08); }
+.markdown-body .callout-note      .callout-title { color: #0969da; }
+.markdown-body .callout-tip       { border-color: #1a7f37; background: rgba(26,127,55,0.08); }
+.markdown-body .callout-tip       .callout-title { color: #1a7f37; }
+.markdown-body .callout-important { border-color: #8250df; background: rgba(130,80,223,0.08); }
+.markdown-body .callout-important .callout-title { color: #8250df; }
+.markdown-body .callout-warning   { border-color: #9a6700; background: rgba(154,103,0,0.08); }
+.markdown-body .callout-warning   .callout-title { color: #9a6700; }
+.markdown-body .callout-caution   { border-color: #cf222e; background: rgba(207,34,46,0.08); }
+.markdown-body .callout-caution   .callout-title { color: #cf222e; }
+
 /* Tables */
 .markdown-body table {
   border-collapse: collapse;
