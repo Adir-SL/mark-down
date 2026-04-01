@@ -225,7 +225,7 @@
         if (taskMatch) {
           isTask = true;
           const checked = taskMatch[1].toLowerCase() === 'x';
-          itemHtml = '<input type="checkbox" disabled' + (checked ? ' checked' : '') + '> ' +
+          itemHtml = '<input type="checkbox"' + (checked ? ' checked' : '') + '> ' +
                      inlineFormat(taskMatch[2], inlineCodes);
         } else {
           itemHtml = inlineFormat(content, inlineCodes);

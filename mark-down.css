@@ -89,10 +89,11 @@
 }
 .markdown-body .task-list-item input[type="checkbox"] {
   margin-right: 0.4em;
-  cursor: default;
+  pointer-events: none;
   vertical-align: middle;
   position: relative;
   top: -0.1em;
+  accent-color: #0969da;
 }
 
 /* Inline code */
