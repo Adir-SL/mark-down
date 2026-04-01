@@ -172,12 +172,20 @@ The CSS is loaded automatically from the same directory as the JS file. To custo
 
 **Option A** — Edit `mark-down.css` directly. Styles are scoped inside `.markdown-body` within the shadow DOM.
 
-**Option B** — Use [CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) on the host element. Because the shadow stylesheet uses `currentColor` and `em` units, you can control the look from outside:
+**Option B** — Set inherited CSS properties on the host element. Because the shadow stylesheet uses `currentColor` and `em` units throughout, four standard properties flow in from outside and affect the entire rendered output:
+
+| Property | What it controls |
+| --- | --- |
+| `color` | All text, plus anything using `currentColor`: blockquote border, `<hr>`, h2 underline |
+| `font-size` | The base size — all `em` values (headings, code, tables, spacing) scale from this |
+| `font-family` | Overrides the default system font stack for body text |
+| `line-height` | Base line spacing for paragraphs and body text |
 
 ```css
 mark-down {
-  font-size: 18px;
   color: #333;
+  font-size: 18px;
+  font-family: Georgia, serif;
   line-height: 1.8;
 }
 ```
