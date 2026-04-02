@@ -5,8 +5,9 @@
 */
 
 mark-down {
-  --md-bg:    #fdf6ec;
-  --md-color: #3b2f20;
+  --md-bg:      #fdf6ec;
+  --md-color:   #3b2f20;
+  --md-padding: 1.5rem;
 
   --md-font-family:             Georgia, "Times New Roman", serif;
   --md-line-height:             1.8;

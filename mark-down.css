@@ -22,6 +22,7 @@
   Base
     --md-bg                   transparent
     --md-color                inherit
+    --md-padding              1.5rem
 
   Typography
     --md-font-family          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
@@ -85,6 +86,7 @@
   line-height: var(--md-line-height, 1.7);
   color: var(--md-color, inherit);
   background: var(--md-bg, transparent);
+  padding: var(--md-padding, 0);
   word-wrap: break-word;
 }
 

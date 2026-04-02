@@ -213,6 +213,7 @@ mark-down {
 | --- | --- | --- |
 | `--md-bg` | `transparent` | Background color of the rendered output |
 | `--md-color` | `inherit` | Text color of the rendered output |
+| `--md-padding` | `0` | Inner padding — set alongside `--md-bg` so content doesn't touch the edges |
 | `--md-font-family` | system sans-serif stack | Body font |
 | `--md-font-size` | `1rem` | Base font size (all `em` values scale from this) |
 | `--md-line-height` | `1.7` | Line spacing |
