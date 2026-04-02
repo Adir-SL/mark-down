@@ -251,6 +251,7 @@ mark-down {
 | `--md-callout-caution-color` | `#cf222e` | Caution callout border + title color |
 | `--md-callout-caution-bg` | `rgba(207,34,46,0.08)` | Caution callout background |
 | `--md-checkbox-color` | `#0969da` | Task list checkbox accent color |
+| `--md-checkbox-filter` | `none` | CSS filter on the checkbox — set to `invert(1)` for dark backgrounds |
 
 ---
 

@@ -94,6 +94,7 @@
   position: relative;
   top: -0.1em;
   accent-color: var(--md-checkbox-color, #0969da);
+  filter: var(--md-checkbox-filter, none);
 }
 
 /* Inline code */
