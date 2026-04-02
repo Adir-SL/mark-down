@@ -23,8 +23,13 @@ Download `mark-down.js` and `mark-down.css` and place them anywhere in your proj
 ```
 your-project/
 ├── index.html
-├── mark-down.js
-└── mark-down.css
+├── src/
+│   ├── mark-down.js
+│   └── mark-down.css
+└── themes/          ← optional
+    ├── md-theme-dark.css
+    ├── md-theme-minimal.css
+    └── md-theme-warm.css
 ```
 
 The CSS file is loaded automatically by the JS from the same folder — you don't need to link it separately.
@@ -37,7 +42,7 @@ Add the script to your `<head>` with the `defer` attribute:
 
 ```html
 <head>
-  <script src="mark-down.js" defer></script>
+  <script src="src/mark-down.js" defer></script>
 </head>
 ```
 
@@ -131,7 +136,7 @@ Sub-lists are created by indenting items by 2 or more spaces. You can nest to an
 Use `- [ ]` for an unchecked item and `- [x]` for a checked one. Task list items can be nested just like regular list items:
 
 ```markdown
-- [x] Download mark-down.js and mark-down.css
+- [x] Download mark-down.js and mark-down.css into `src/`
 - [x] Add the script tag
 - [ ] Write some markdown
   - [ ] Try a task list
@@ -175,17 +180,17 @@ The entire parser and renderer is ~200 lines of readable, dependency-free JavaSc
 Download one of the included theme files and link it in your `<head>` **after** the script tag:
 
 ```html
-<script src="mark-down.js" defer></script>
-<link rel="stylesheet" href="md-theme-dark.css">
+<script src="src/mark-down.js" defer></script>
+<link rel="stylesheet" href="themes/md-theme-dark.css">
 ```
 
 Three themes are included:
 
 | File | Description |
 | --- | --- |
-| `md-theme-dark.css` | Dark mode — GitHub-dark-style palette, lighter link and callout colors |
-| `md-theme-minimal.css` | Minimal — serif font, no border-radius, transparent code backgrounds |
-| `md-theme-warm.css` | Warm — sepia tones, serif font, earthy palette throughout |
+| `themes/md-theme-dark.css` | Dark mode — GitHub-dark-style palette, lighter link and callout colors |
+| `themes/md-theme-minimal.css` | Minimal — serif font, no border-radius, transparent code backgrounds |
+| `themes/md-theme-warm.css` | Warm — sepia tones, serif font, earthy palette throughout |
 
 ### Writing your own theme
 

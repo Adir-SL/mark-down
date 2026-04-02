@@ -352,8 +352,8 @@
         return src.replace(/mark-down\.js$/, 'mark-down.css');
       }
     }
-    // Fallback: same directory
-    return 'mark-down.css';
+    // Fallback: src directory
+    return 'src/mark-down.css';
   }
 
   customElements.define('mark-down', MarkDownElement);

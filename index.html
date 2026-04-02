@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <script src="mark-down.js" defer></script>
+  <script src="src/mark-down.js" defer></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -706,7 +706,7 @@
       <div class="step">
         <div class="step-num">01 &mdash; Download</div>
         <h3>Grab the files</h3>
-        <p>Download <a href="mark-down.js" download class="dl-link"><code>mark-down.js</code></a> and <a href="mark-down.css" download class="dl-link"><code>mark-down.css</code></a> and place them in your project. That's the entire install.</p>
+        <p>Download <a href="src/mark-down.js" download class="dl-link"><code>mark-down.js</code></a> and <a href="src/mark-down.css" download class="dl-link"><code>mark-down.css</code></a> and place them in your project. That's the entire install.</p>
       </div>
       <div class="step">
         <div class="step-num">02 &mdash; Include</div>
@@ -730,7 +730,7 @@
         <div class="editor-filename">index.html</div>
       </div>
       <pre><span class="c">&lt;!-- Load once in &lt;head&gt; --&gt;</span>
-<span class="t">&lt;script</span> <span class="a">src</span>=<span class="v">"mark-down.js"</span> <span class="a">defer</span><span class="t">&gt;&lt;/script&gt;</span>
+<span class="t">&lt;script</span> <span class="a">src</span>=<span class="v">"src/mark-down.js"</span> <span class="a">defer</span><span class="t">&gt;&lt;/script&gt;</span>
 
 <span class="c">&lt;!-- Use anywhere in &lt;body&gt; --&gt;</span>
 <span class="t">&lt;mark-down&gt;</span>
@@ -798,8 +798,8 @@
 
             1. Clone the repo
             2. Add the files
-               - `mark-down.js`
-               - `mark-down.css`
+               - `src/mark-down.js`
+               - `src/mark-down.css`
             3. Write markdown
           </mark-down>
         </div>
@@ -815,7 +815,7 @@
             **Project checklist**
 
             - [x] Set up the repository
-            - [x] Add `mark-down.js` and `mark-down.css`
+            - [x] Add `src/mark-down.js` and `src/mark-down.css`
             - [x] Write some markdown
             - [ ] Write documentation
             - [ ] Deploy to production
@@ -974,19 +974,19 @@
         <div class="step-num">Dark</div>
         <h3>md-theme-dark.css</h3>
         <p>GitHub-dark palette — lighter links, muted borders, and adapted callout colors for dark backgrounds.</p>
-        <a href="md-theme-dark.css" download class="dl-link" style="display:inline-block; margin-top: 1rem;"><code>md-theme-dark.css</code></a>
+        <a href="themes/md-theme-dark.css" download class="dl-link" style="display:inline-block; margin-top: 1rem;"><code>md-theme-dark.css</code></a>
       </div>
       <div class="step">
         <div class="step-num">Minimal</div>
         <h3>md-theme-minimal.css</h3>
         <p>Serif font, no border-radius anywhere, transparent code backgrounds — stripped back to the essentials.</p>
-        <a href="md-theme-minimal.css" download class="dl-link" style="display:inline-block; margin-top: 1rem;"><code>md-theme-minimal.css</code></a>
+        <a href="themes/md-theme-minimal.css" download class="dl-link" style="display:inline-block; margin-top: 1rem;"><code>md-theme-minimal.css</code></a>
       </div>
       <div class="step">
         <div class="step-num">Warm</div>
         <h3>md-theme-warm.css</h3>
         <p>Sepia tones and a serif font — earthy palette throughout, great for editorial or documentation sites.</p>
-        <a href="md-theme-warm.css" download class="dl-link" style="display:inline-block; margin-top: 1rem;"><code>md-theme-warm.css</code></a>
+        <a href="themes/md-theme-warm.css" download class="dl-link" style="display:inline-block; margin-top: 1rem;"><code>md-theme-warm.css</code></a>
       </div>
     </div>
 
@@ -1000,10 +1000,10 @@
         <div class="editor-filename">index.html</div>
       </div>
       <pre><span class="c">&lt;!-- Load the library --&gt;</span>
-<span class="t">&lt;script</span> <span class="a">src</span>=<span class="v">"mark-down.js"</span> <span class="a">defer</span><span class="t">&gt;&lt;/script&gt;</span>
+<span class="t">&lt;script</span> <span class="a">src</span>=<span class="v">"src/mark-down.js"</span> <span class="a">defer</span><span class="t">&gt;&lt;/script&gt;</span>
 
 <span class="c">&lt;!-- Add a theme (pick one, or write your own) --&gt;</span>
-<span class="t">&lt;link</span> <span class="a">rel</span>=<span class="v">"stylesheet"</span> <span class="a">href</span>=<span class="v">"md-theme-dark.css"</span><span class="t">&gt;</span>
+<span class="t">&lt;link</span> <span class="a">rel</span>=<span class="v">"stylesheet"</span> <span class="a">href</span>=<span class="v">"themes/md-theme-dark.css"</span><span class="t">&gt;</span>
 
 <span class="c">&lt;!-- Or override individual variables inline --&gt;</span>
 <span class="t">&lt;style&gt;</span>
