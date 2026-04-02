@@ -18,7 +18,7 @@ A zero-dependency vanilla JavaScript library that renders markdown as a native H
 
 ## Installation
 
-### Option A — CDN (recommended)
+### Option A: CDN (recommended)
 
 No download needed. Just add this to your `<head>`:
 
@@ -30,7 +30,7 @@ No download needed. Just add this to your `<head>`:
 
 The CSS is loaded automatically from the same location — nothing else needed.
 
-### Option B — Self-hosted
+### Option B: Self-hosted
 
 Download `mark-down.js` and `mark-down.css` and place them anywhere in your project. No npm, no bundler, no build step.
 
@@ -202,9 +202,9 @@ Three themes are included:
 
 | File | Description |
 | --- | --- |
-| `themes/md-theme-dark.css` | Dark mode — GitHub-dark-style palette, lighter link and callout colors |
-| `themes/md-theme-minimal.css` | Minimal — serif font, no border-radius, transparent code backgrounds |
-| `themes/md-theme-warm.css` | Warm — sepia tones, serif font, earthy palette throughout |
+| `themes/md-theme-dark.css` | Dark mode: GitHub-dark-style palette, lighter link and callout colors |
+| `themes/md-theme-minimal.css` | Minimal: serif font, no border-radius, transparent code backgrounds |
+| `themes/md-theme-warm.css` | Warm: sepia tones, serif font, earthy palette throughout |
 
 ### Writing your own theme
 
