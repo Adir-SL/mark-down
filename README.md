@@ -211,6 +211,8 @@ mark-down {
 
 | Variable | Default | Controls |
 | --- | --- | --- |
+| `--md-bg` | `transparent` | Background color of the rendered output |
+| `--md-color` | `inherit` | Text color of the rendered output |
 | `--md-font-family` | system sans-serif stack | Body font |
 | `--md-font-size` | `1rem` | Base font size (all `em` values scale from this) |
 | `--md-line-height` | `1.7` | Line spacing |
