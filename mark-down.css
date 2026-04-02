@@ -1,9 +1,84 @@
 /* mark-down.css — styles for .markdown-body inside <mark-down> shadow DOM */
 
+/*
+  ── Theme variables ───────────────────────────────────────────────────────────
+  Override any of these on the <mark-down> element (or :root) to theme the
+  output without editing this file. All variables fall back to the defaults
+  below if not set, so a theme file only needs to declare what it changes.
+
+  Example md-theme-dark.css:
+
+    mark-down {
+      --md-link-color:         #58a6ff;
+      --md-code-bg:            rgba(255,255,255,0.08);
+      --md-pre-bg:             rgba(255,255,255,0.05);
+      --md-table-border-color: #444;
+      --md-table-header-bg:    rgba(255,255,255,0.07);
+      --md-table-stripe-bg:    rgba(255,255,255,0.03);
+    }
+
+  Available variables (with their defaults):
+
+  Typography
+    --md-font-family          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
+    --md-font-size            1rem
+    --md-line-height          1.7
+    --md-mono-font-family     "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace
+
+  Headings
+    --md-heading-font-weight  600
+    --md-h1-font-size         2em
+    --md-h2-font-size         1.5em
+    --md-h3-font-size         1.25em
+    --md-h4-font-size         1em
+    --md-h5-font-size         0.875em
+    --md-h6-font-size         0.85em
+
+  Links
+    --md-link-color           #0969da
+
+  Blockquote
+    --md-blockquote-border-color  currentColor
+    --md-blockquote-border-width  4px
+
+  Code
+    --md-code-font-size       0.875em
+    --md-code-bg              rgba(128,128,128,0.15)
+    --md-code-radius          4px
+    --md-pre-bg               rgba(128,128,128,0.12)
+    --md-pre-radius           6px
+
+  Images
+    --md-img-radius           4px
+
+  Tables
+    --md-table-font-size      0.95em
+    --md-table-border-color   #c8c8c8
+    --md-table-radius         6px
+    --md-table-header-bg      rgba(128,128,128,0.1)
+    --md-table-stripe-bg      rgba(128,128,128,0.05)
+
+  Callouts
+    --md-callout-radius           6px
+    --md-callout-note-color       #0969da
+    --md-callout-note-bg          rgba(9,105,218,0.08)
+    --md-callout-tip-color        #1a7f37
+    --md-callout-tip-bg           rgba(26,127,55,0.08)
+    --md-callout-important-color  #8250df
+    --md-callout-important-bg     rgba(130,80,223,0.08)
+    --md-callout-warning-color    #9a6700
+    --md-callout-warning-bg       rgba(154,103,0,0.08)
+    --md-callout-caution-color    #cf222e
+    --md-callout-caution-bg       rgba(207,34,46,0.08)
+
+  Task lists
+    --md-checkbox-color       #0969da
+  ─────────────────────────────────────────────────────────────────────────── */
+
 .markdown-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-size: 1rem;
-  line-height: 1.7;
+  font-family: var(--md-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);
+  font-size: var(--md-font-size, 1rem);
+  line-height: var(--md-line-height, 1.7);
   color: inherit;
   word-wrap: break-word;
 }
@@ -17,17 +92,17 @@
 .markdown-body h6 {
   margin-top: 1.25em;
   margin-bottom: 0.5em;
-  font-weight: 600;
+  font-weight: var(--md-heading-font-weight, 600);
   line-height: 1.3;
 }
-.markdown-body h1 { font-size: 2em; }
-.markdown-body h2 { font-size: 1.5em; border-bottom: 1px solid currentColor; padding-bottom: 0.2em; opacity: 0.9; }
-.markdown-body h3 { font-size: 1.25em; }
-.markdown-body h4 { font-size: 1em; }
-.markdown-body h5 { font-size: 0.875em; }
-.markdown-body h6 { font-size: 0.85em; opacity: 0.7; }
+.markdown-body h1 { font-size: var(--md-h1-font-size, 2em); }
+.markdown-body h2 { font-size: var(--md-h2-font-size, 1.5em); border-bottom: 1px solid currentColor; padding-bottom: 0.2em; opacity: 0.9; }
+.markdown-body h3 { font-size: var(--md-h3-font-size, 1.25em); }
+.markdown-body h4 { font-size: var(--md-h4-font-size, 1em); }
+.markdown-body h5 { font-size: var(--md-h5-font-size, 0.875em); }
+.markdown-body h6 { font-size: var(--md-h6-font-size, 0.85em); opacity: 0.7; }
 
-/* First element — remove top margin */
+/* First/last element — remove excess margin */
 .markdown-body > :first-child { margin-top: 0; }
 .markdown-body > :last-child  { margin-bottom: 0; }
 
@@ -39,7 +114,7 @@
 
 /* Links */
 .markdown-body a {
-  color: #0969da;
+  color: var(--md-link-color, #0969da);
   text-decoration: none;
 }
 .markdown-body a:hover {
@@ -63,7 +138,7 @@
 .markdown-body blockquote {
   margin: 0 0 1em 0;
   padding: 0.5em 1em;
-  border-left: 4px solid currentColor;
+  border-left: var(--md-blockquote-border-width, 4px) solid var(--md-blockquote-border-color, currentColor);
   opacity: 0.8;
   font-style: italic;
 }
@@ -93,28 +168,28 @@
   vertical-align: middle;
   position: relative;
   top: -0.1em;
-  accent-color: #0969da;
+  accent-color: var(--md-checkbox-color, #0969da);
 }
 
 /* Inline code */
 .markdown-body code {
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-  font-size: 0.875em;
-  background: rgba(128, 128, 128, 0.15);
+  font-family: var(--md-mono-font-family, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace);
+  font-size: var(--md-code-font-size, 0.875em);
+  background: var(--md-code-bg, rgba(128, 128, 128, 0.15));
   padding: 0.15em 0.4em;
-  border-radius: 4px;
+  border-radius: var(--md-code-radius, 4px);
 }
 
 /* Code block */
 .markdown-body pre {
   margin: 0 0 1em 0;
   padding: 1em 1.25em;
-  background: rgba(128, 128, 128, 0.12);
-  border-radius: 6px;
+  background: var(--md-pre-bg, rgba(128, 128, 128, 0.12));
+  border-radius: var(--md-pre-radius, 6px);
   overflow-x: auto;
 }
 .markdown-body pre code {
-  font-size: 0.875em;
+  font-size: var(--md-code-font-size, 0.875em);
   background: none;
   padding: 0;
   border-radius: 0;
@@ -125,14 +200,14 @@
 .markdown-body img {
   max-width: 100%;
   height: auto;
-  border-radius: 4px;
+  border-radius: var(--md-img-radius, 4px);
 }
 
 /* Callouts (GitHub-style alerts) */
 .markdown-body .callout {
   margin: 0 0 1em 0;
   padding: 0.75em 1em;
-  border-radius: 6px;
+  border-radius: var(--md-callout-radius, 6px);
   border: 1px solid;
 }
 .markdown-body .callout-title {
@@ -149,37 +224,37 @@
 .markdown-body .callout-title svg { flex-shrink: 0; }
 .markdown-body .callout > :last-child { margin-bottom: 0; }
 
-.markdown-body .callout-note      { border-color: #0969da; background: rgba(9,105,218,0.08); }
-.markdown-body .callout-note      .callout-title { color: #0969da; }
-.markdown-body .callout-tip       { border-color: #1a7f37; background: rgba(26,127,55,0.08); }
-.markdown-body .callout-tip       .callout-title { color: #1a7f37; }
-.markdown-body .callout-important { border-color: #8250df; background: rgba(130,80,223,0.08); }
-.markdown-body .callout-important .callout-title { color: #8250df; }
-.markdown-body .callout-warning   { border-color: #9a6700; background: rgba(154,103,0,0.08); }
-.markdown-body .callout-warning   .callout-title { color: #9a6700; }
-.markdown-body .callout-caution   { border-color: #cf222e; background: rgba(207,34,46,0.08); }
-.markdown-body .callout-caution   .callout-title { color: #cf222e; }
+.markdown-body .callout-note      { border-color: var(--md-callout-note-color, #0969da); background: var(--md-callout-note-bg, rgba(9,105,218,0.08)); }
+.markdown-body .callout-note      .callout-title { color: var(--md-callout-note-color, #0969da); }
+.markdown-body .callout-tip       { border-color: var(--md-callout-tip-color, #1a7f37); background: var(--md-callout-tip-bg, rgba(26,127,55,0.08)); }
+.markdown-body .callout-tip       .callout-title { color: var(--md-callout-tip-color, #1a7f37); }
+.markdown-body .callout-important { border-color: var(--md-callout-important-color, #8250df); background: var(--md-callout-important-bg, rgba(130,80,223,0.08)); }
+.markdown-body .callout-important .callout-title { color: var(--md-callout-important-color, #8250df); }
+.markdown-body .callout-warning   { border-color: var(--md-callout-warning-color, #9a6700); background: var(--md-callout-warning-bg, rgba(154,103,0,0.08)); }
+.markdown-body .callout-warning   .callout-title { color: var(--md-callout-warning-color, #9a6700); }
+.markdown-body .callout-caution   { border-color: var(--md-callout-caution-color, #cf222e); background: var(--md-callout-caution-bg, rgba(207,34,46,0.08)); }
+.markdown-body .callout-caution   .callout-title { color: var(--md-callout-caution-color, #cf222e); }
 
 /* Tables */
 .markdown-body table {
   border-collapse: collapse;
   width: 100%;
   margin-bottom: 1em;
-  font-size: 0.95em;
-  border-radius: 6px;
+  font-size: var(--md-table-font-size, 0.95em);
+  border-radius: var(--md-table-radius, 6px);
   overflow: hidden;
-  box-shadow: 0 0 0 1px #c8c8c8 inset;
+  box-shadow: 0 0 0 1px var(--md-table-border-color, #c8c8c8) inset;
 }
 .markdown-body th,
 .markdown-body td {
-  border: 1px solid #c8c8c8;
+  border: 1px solid var(--md-table-border-color, #c8c8c8);
   padding: 0.5em 0.75em;
   text-align: left;
 }
 .markdown-body thead tr {
-  background: rgba(128, 128, 128, 0.1);
+  background: var(--md-table-header-bg, rgba(128, 128, 128, 0.1));
   font-weight: 600;
 }
 .markdown-body tbody tr:nth-child(even) {
-  background: rgba(128, 128, 128, 0.05);
+  background: var(--md-table-stripe-bg, rgba(128, 128, 128, 0.05));
 }

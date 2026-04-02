@@ -166,29 +166,83 @@ The entire parser and renderer is ~200 lines of readable, dependency-free JavaSc
 
 ---
 
-## Styling
+## Theming
 
-The CSS is loaded automatically from the same directory as the JS file. To customize styles, either:
+`mark-down.css` exposes every visual value — colors, fonts, sizes, radii, borders — as a CSS custom property. Override any of them from your own stylesheet and the change cascades into the shadow DOM automatically. If a variable isn't set, it falls back to the default value, so you only need to declare what you actually want to change.
 
-**Option A** — Edit `mark-down.css` directly. Styles are scoped inside `.markdown-body` within the shadow DOM.
+### Using a pre-built theme
 
-**Option B** — Set inherited CSS properties on the host element. Because the shadow stylesheet uses `currentColor` and `em` units throughout, four standard properties flow in from outside and affect the entire rendered output:
+Download one of the included theme files and link it in your `<head>` **after** the script tag:
 
-| Property | What it controls |
+```html
+<script src="mark-down.js" defer></script>
+<link rel="stylesheet" href="md-theme-dark.css">
+```
+
+Three themes are included:
+
+| File | Description |
 | --- | --- |
-| `color` | All text, plus anything using `currentColor`: blockquote border, `<hr>`, h2 underline |
-| `font-size` | The base size — all `em` values (headings, code, tables, spacing) scale from this |
-| `font-family` | Overrides the default system font stack for body text |
-| `line-height` | Base line spacing for paragraphs and body text |
+| `md-theme-dark.css` | Dark mode — GitHub-dark-style palette, lighter link and callout colors |
+| `md-theme-minimal.css` | Minimal — serif font, no border-radius, transparent code backgrounds |
+| `md-theme-warm.css` | Warm — sepia tones, serif font, earthy palette throughout |
+
+### Writing your own theme
+
+Create a CSS file that sets any of the variables below on the `mark-down` element:
 
 ```css
+/* my-theme.css */
 mark-down {
-  color: #333;
-  font-size: 18px;
-  font-family: Georgia, serif;
-  line-height: 1.8;
+  color: #1a1a1a;                /* text color — inherited by shadow DOM */
+
+  --md-font-family:   Georgia, serif;
+  --md-line-height:   1.8;
+  --md-link-color:    #b03a2e;
+
+  --md-code-bg:       rgba(176, 58, 46, 0.08);
+  --md-pre-bg:        rgba(176, 58, 46, 0.05);
+
+  --md-table-border-color: #c4a882;
 }
 ```
+
+### Available variables
+
+| Variable | Default | Controls |
+| --- | --- | --- |
+| `--md-font-family` | system sans-serif stack | Body font |
+| `--md-font-size` | `1rem` | Base font size (all `em` values scale from this) |
+| `--md-line-height` | `1.7` | Line spacing |
+| `--md-mono-font-family` | system monospace stack | Code font |
+| `--md-heading-font-weight` | `600` | Heading weight |
+| `--md-h1-font-size` … `--md-h6-font-size` | `2em` … `0.85em` | Individual heading sizes |
+| `--md-link-color` | `#0969da` | Link color |
+| `--md-blockquote-border-color` | `currentColor` | Blockquote left border color |
+| `--md-blockquote-border-width` | `4px` | Blockquote left border width |
+| `--md-code-font-size` | `0.875em` | Inline and block code size |
+| `--md-code-bg` | `rgba(128,128,128,0.15)` | Inline code background |
+| `--md-code-radius` | `4px` | Inline code border-radius |
+| `--md-pre-bg` | `rgba(128,128,128,0.12)` | Code block background |
+| `--md-pre-radius` | `6px` | Code block border-radius |
+| `--md-img-radius` | `4px` | Image border-radius |
+| `--md-table-font-size` | `0.95em` | Table font size |
+| `--md-table-border-color` | `#c8c8c8` | Table border color |
+| `--md-table-radius` | `6px` | Table border-radius |
+| `--md-table-header-bg` | `rgba(128,128,128,0.1)` | Table header row background |
+| `--md-table-stripe-bg` | `rgba(128,128,128,0.05)` | Table alternating row background |
+| `--md-callout-radius` | `6px` | Callout border-radius |
+| `--md-callout-note-color` | `#0969da` | Note callout border + title color |
+| `--md-callout-note-bg` | `rgba(9,105,218,0.08)` | Note callout background |
+| `--md-callout-tip-color` | `#1a7f37` | Tip callout border + title color |
+| `--md-callout-tip-bg` | `rgba(26,127,55,0.08)` | Tip callout background |
+| `--md-callout-important-color` | `#8250df` | Important callout border + title color |
+| `--md-callout-important-bg` | `rgba(130,80,223,0.08)` | Important callout background |
+| `--md-callout-warning-color` | `#9a6700` | Warning callout border + title color |
+| `--md-callout-warning-bg` | `rgba(154,103,0,0.08)` | Warning callout background |
+| `--md-callout-caution-color` | `#cf222e` | Caution callout border + title color |
+| `--md-callout-caution-bg` | `rgba(207,34,46,0.08)` | Caution callout background |
+| `--md-checkbox-color` | `#0969da` | Task list checkbox accent color |
 
 ---
 

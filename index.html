@@ -542,6 +542,7 @@
     <a href="#usage"    class="nav-hide">Usage</a>
     <a href="#demo"     class="nav-hide">Demo</a>
     <a href="#syntax"   class="nav-hide">Syntax</a>
+    <a href="#theming"  class="nav-hide">Theming</a>
     <a href="https://github.com/Adir-SL/mark-down" class="btn btn-solid" style="margin-left:.5rem">
       <svg height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
         <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
@@ -943,6 +944,82 @@
 
 <hr class="divider">
 
+<!-- ════════════════ THEMING -->
+<section id="theming">
+  <div class="wrap">
+    <span class="eyebrow">Theming</span>
+    <h2 class="s-title">Make it yours</h2>
+    <p class="s-desc">Every color, font, size, and border in <code>mark-down.css</code> is a CSS variable. Override only what you need — everything else stays as the default.</p>
+
+    <div class="steps" style="margin-bottom: 2.5rem;">
+      <div class="step">
+        <div class="step-num">Option A &mdash; Pre-built theme</div>
+        <h3>Download a theme file</h3>
+        <p>Link one of the included theme files after the script tag. One line, done.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">Option B &mdash; Custom theme</div>
+        <h3>Write your own</h3>
+        <p>Create a CSS file that sets any <code>--md-*</code> variables on <code>mark-down</code>. Only declare what you want to change.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">Option C &mdash; Inline</div>
+        <h3>Override per element</h3>
+        <p>Set variables directly on any <code>&lt;mark-down&gt;</code> element via a <code>style</code> attribute or targeted CSS selector.</p>
+      </div>
+    </div>
+
+    <div class="steps" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 2.5rem;">
+      <div class="step">
+        <div class="step-num">Dark</div>
+        <h3>md-theme-dark.css</h3>
+        <p>GitHub-dark palette — lighter links, muted borders, and adapted callout colors for dark backgrounds.</p>
+        <a href="md-theme-dark.css" download class="dl-link" style="display:inline-block; margin-top: 1rem;"><code>md-theme-dark.css</code></a>
+      </div>
+      <div class="step">
+        <div class="step-num">Minimal</div>
+        <h3>md-theme-minimal.css</h3>
+        <p>Serif font, no border-radius anywhere, transparent code backgrounds — stripped back to the essentials.</p>
+        <a href="md-theme-minimal.css" download class="dl-link" style="display:inline-block; margin-top: 1rem;"><code>md-theme-minimal.css</code></a>
+      </div>
+      <div class="step">
+        <div class="step-num">Warm</div>
+        <h3>md-theme-warm.css</h3>
+        <p>Sepia tones and a serif font — earthy palette throughout, great for editorial or documentation sites.</p>
+        <a href="md-theme-warm.css" download class="dl-link" style="display:inline-block; margin-top: 1rem;"><code>md-theme-warm.css</code></a>
+      </div>
+    </div>
+
+    <div class="editor">
+      <div class="editor-bar">
+        <div class="editor-dots">
+          <div class="editor-dot"></div>
+          <div class="editor-dot"></div>
+          <div class="editor-dot"></div>
+        </div>
+        <div class="editor-filename">index.html</div>
+      </div>
+      <pre><span class="c">&lt;!-- Load the library --&gt;</span>
+<span class="t">&lt;script</span> <span class="a">src</span>=<span class="v">"mark-down.js"</span> <span class="a">defer</span><span class="t">&gt;&lt;/script&gt;</span>
+
+<span class="c">&lt;!-- Add a theme (pick one, or write your own) --&gt;</span>
+<span class="t">&lt;link</span> <span class="a">rel</span>=<span class="v">"stylesheet"</span> <span class="a">href</span>=<span class="v">"md-theme-dark.css"</span><span class="t">&gt;</span>
+
+<span class="c">&lt;!-- Or override individual variables inline --&gt;</span>
+<span class="t">&lt;style&gt;</span>
+<span class="tx">  mark-down {
+    --md-font-family:  Georgia, serif;
+    --md-link-color:   #b03a2e;
+    --md-pre-radius:   0;
+  }</span>
+<span class="t">&lt;/style&gt;</span></pre>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
 <!-- ════════════════ CTA -->
 <section style="padding: 5rem 2.5rem;">
   <div class="wrap">
@@ -968,6 +1045,7 @@
     <a href="#usage">Usage</a>
     <a href="#demo">Demo</a>
     <a href="#syntax">Syntax</a>
+    <a href="#theming">Theming</a>
     <a href="https://github.com/Adir-SL/mark-down">GitHub</a>
   </div>
 </footer>

@@ -1,0 +1,36 @@
+/* md-theme-warm.css — warm sepia theme for <mark-down>
+   Usage: link this file after mark-down.css in your <head>
+
+   <link rel="stylesheet" href="md-theme-warm.css">
+*/
+
+mark-down {
+  color: #3b2f20;
+
+  --md-font-family:             Georgia, "Times New Roman", serif;
+  --md-line-height:             1.8;
+
+  --md-link-color:              #8b4513;
+
+  --md-code-bg:                 rgba(139, 90, 43, 0.1);
+  --md-pre-bg:                  rgba(139, 90, 43, 0.07);
+
+  --md-blockquote-border-color: #c4a882;
+
+  --md-table-border-color:      #c4a882;
+  --md-table-header-bg:         rgba(139, 90, 43, 0.1);
+  --md-table-stripe-bg:         rgba(139, 90, 43, 0.04);
+
+  --md-callout-note-color:      #5b7fa6;
+  --md-callout-note-bg:         rgba(91, 127, 166, 0.1);
+  --md-callout-tip-color:       #4a7c59;
+  --md-callout-tip-bg:          rgba(74, 124, 89, 0.1);
+  --md-callout-important-color: #7c5b9e;
+  --md-callout-important-bg:    rgba(124, 91, 158, 0.1);
+  --md-callout-warning-color:   #9e7b1a;
+  --md-callout-warning-bg:      rgba(158, 123, 26, 0.1);
+  --md-callout-caution-color:   #b03a2e;
+  --md-callout-caution-bg:      rgba(176, 58, 46, 0.1);
+
+  --md-checkbox-color:          #8b4513;
+}
