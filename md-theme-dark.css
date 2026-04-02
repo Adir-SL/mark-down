@@ -1,35 +1,23 @@
-/* md-theme-dark.css — dark mode theme for <mark-down>
-   Usage: link this file after mark-down.css in your <head>
-
-   <link rel="stylesheet" href="md-theme-dark.css">
-*/
-
 mark-down {
-  --md-bg:      #0d1117;
-  --md-color:   #e6edf3;
+  --md-bg: #0d1117;
+  --md-color: #e6edf3;
   --md-padding: 1rem;
-
-  --md-link-color:              #58a6ff;
-
-  --md-code-bg:                 rgba(255, 255, 255, 0.08);
-  --md-pre-bg:                  rgba(255, 255, 255, 0.05);
-
+  --md-link-color: #58a6ff;
+  --md-code-bg: rgba(255, 255, 255, 0.08);
+  --md-pre-bg: rgba(255, 255, 255, 0.05);
   --md-blockquote-border-color: #3d444d;
-
-  --md-table-border-color:      #3d444d;
-  --md-table-header-bg:         rgba(255, 255, 255, 0.07);
-  --md-table-stripe-bg:         rgba(255, 255, 255, 0.03);
-
-  --md-callout-note-color:      #58a6ff;
-  --md-callout-note-bg:         rgba(88, 166, 255, 0.1);
-  --md-callout-tip-color:       #3fb950;
-  --md-callout-tip-bg:          rgba(63, 185, 80, 0.1);
+  --md-table-border-color: #3d444d;
+  --md-table-header-bg: rgba(255, 255, 255, 0.07);
+  --md-table-stripe-bg: rgba(255, 255, 255, 0.03);
+  --md-callout-note-color: #58a6ff;
+  --md-callout-note-bg: rgba(88, 166, 255, 0.1);
+  --md-callout-tip-color: #3fb950;
+  --md-callout-tip-bg: rgba(63, 185, 80, 0.1);
   --md-callout-important-color: #a371f7;
-  --md-callout-important-bg:    rgba(163, 113, 247, 0.1);
-  --md-callout-warning-color:   #d29922;
-  --md-callout-warning-bg:      rgba(210, 153, 34, 0.1);
-  --md-callout-caution-color:   #f85149;
-  --md-callout-caution-bg:      rgba(248, 81, 73, 0.1);
-
-  --md-checkbox-color:          #58a6ff;
+  --md-callout-important-bg: rgba(163, 113, 247, 0.1);
+  --md-callout-warning-color: #d29922;
+  --md-callout-warning-bg: rgba(210, 153, 34, 0.1);
+  --md-callout-caution-color: #f85149;
+  --md-callout-caution-bg: rgba(248, 81, 73, 0.1);
+  --md-checkbox-color: #58a6ff;
 }

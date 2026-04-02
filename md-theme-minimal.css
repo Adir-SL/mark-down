@@ -1,34 +1,21 @@
-/* md-theme-minimal.css — clean, low-noise theme for <mark-down>
-   Usage: link this file after mark-down.css in your <head>
-
-   <link rel="stylesheet" href="md-theme-minimal.css">
-*/
-
 mark-down {
-  --md-bg:      #ffffff;
-  --md-color:   inherit;
+  --md-bg: #ffffff;
+  --md-color: inherit;
   --md-padding: 1rem;
-
-  --md-font-family:             Georgia, "Times New Roman", serif;
-  --md-line-height:             1.85;
-  --md-heading-font-weight:     700;
-
-  --md-link-color:              inherit;
-
-  --md-code-bg:                 transparent;
-  --md-code-radius:             0;
-  --md-pre-bg:                  transparent;
-  --md-pre-radius:              0;
-
+  --md-font-family: Georgia, "Times New Roman", serif;
+  --md-line-height: 1.85;
+  --md-heading-font-weight: 700;
+  --md-link-color: inherit;
+  --md-code-bg: transparent;
+  --md-code-radius: 0;
+  --md-pre-bg: transparent;
+  --md-pre-radius: 0;
   --md-blockquote-border-width: 2px;
-
-  --md-table-border-color:      currentColor;
-  --md-table-header-bg:         transparent;
-  --md-table-stripe-bg:         transparent;
-  --md-table-radius:            0;
-
-  --md-img-radius:              0;
-  --md-callout-radius:          0;
-
-  --md-checkbox-color:          currentColor;
+  --md-table-border-color: currentColor;
+  --md-table-header-bg: transparent;
+  --md-table-stripe-bg: transparent;
+  --md-table-radius: 0;
+  --md-img-radius: 0;
+  --md-callout-radius: 0;
+  --md-checkbox-color: currentColor;
 }
