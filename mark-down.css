@@ -19,6 +19,10 @@
 
   Available variables (with their defaults):
 
+  Base
+    --md-bg                   transparent
+    --md-color                inherit
+
   Typography
     --md-font-family          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif
     --md-font-size            1rem
@@ -79,7 +83,8 @@
   font-family: var(--md-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);
   font-size: var(--md-font-size, 1rem);
   line-height: var(--md-line-height, 1.7);
-  color: inherit;
+  color: var(--md-color, inherit);
+  background: var(--md-bg, transparent);
   word-wrap: break-word;
 }
 
