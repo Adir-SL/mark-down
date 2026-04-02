@@ -18,6 +18,20 @@ A zero-dependency vanilla JavaScript library that renders markdown as a native H
 
 ## Installation
 
+### Option A — CDN (recommended)
+
+No download needed. Just add this to your `<head>`:
+
+```html
+<head>
+  <script src="https://adir-sl.github.io/mark-down/src/mark-down.js" defer></script>
+</head>
+```
+
+The CSS is loaded automatically from the same location — nothing else needed.
+
+### Option B — Self-hosted
+
 Download `mark-down.js` and `mark-down.css` and place them anywhere in your project. No npm, no bundler, no build step.
 
 ```
@@ -42,7 +56,7 @@ Add the script to your `<head>` with the `defer` attribute:
 
 ```html
 <head>
-  <script src="src/mark-down.js" defer></script>
+  <script src="https://adir-sl.github.io/mark-down/src/mark-down.js" defer></script>
 </head>
 ```
 
