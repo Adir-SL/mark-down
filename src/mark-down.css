@@ -94,6 +94,8 @@
   position: relative;
   top: -0.1em;
   accent-color: var(--md-checkbox-color, #0969da);
+}
+.markdown-body .task-list-item input[type="checkbox"]:not(:checked) {
   filter: var(--md-checkbox-filter, none);
 }
 
