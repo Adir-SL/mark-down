@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../src/mark-down.js" defer></script>
+  <link rel="stylesheet" href="../src/mark-down.css">
+  <link rel="stylesheet" href="./md-theme-minimal.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #ffffff; padding: 1.75rem 2rem; }
+  </style>
+</head>
+<body>
+  <mark-down>
+    # Minimal Theme
+
+    Stripped back to the *essentials* — **no border-radius**, no colored backgrounds, no decoration. Just pure prose.
+
+    Visit the [mark-down.js repo](https://github.com/Adir-SL/mark-down) to get started.
+
+    > [!NOTE]
+    > This theme inherits your page's `color` and `font-size` — it adapts to whatever context it's dropped into.
+
+    > [!TIP]
+    > Combine with a custom `font-family` on your page body to instantly style all `mark-down` elements.
+
+    ## Code example
+
+    ```js
+    function greet(name) {
+      return `Hello, ${name}!`;
+    }
+    console.log(greet("world"));
+    ```
+
+    ## What's included
+
+    - Transparent code backgrounds — no visual noise
+    - Zero border-radius on all elements
+    - Georgia serif with a `1.85` line height
+
+    | Variable | Value |
+    | -------- | ----- |
+    | `--md-bg` | `#ffffff` |
+    | `--md-color` | `inherit` |
+    | `--md-link-color` | `inherit` |
+  </mark-down>
+</body>
+</html>

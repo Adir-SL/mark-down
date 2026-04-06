@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../src/mark-down.js" defer></script>
+  <link rel="stylesheet" href="../src/mark-down.css">
+  <link rel="stylesheet" href="./md-theme-ocean.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0a1628; padding: 1.75rem 2rem; }
+  </style>
+</head>
+<body>
+  <mark-down>
+    # Ocean Theme
+
+    A dark theme built around **teal and aqua accents** on a deep navy canvas — like staring into the deep sea.
+
+    Visit the [mark-down.js repo](https://github.com/Adir-SL/mark-down) to get started.
+
+    > [!TIP]
+    > The `teal` palette reads beautifully at night — easy on the eyes for long sessions.
+
+    > [!WARNING]
+    > Combining multiple theme files on one page requires scoped CSS selectors.
+
+    ## Code example
+
+    ```js
+    function greet(name) {
+      return `Hello, ${name}!`;
+    }
+    console.log(greet("world"));
+    ```
+
+    ## What's included
+
+    - Deep navy `#0a1628` background — deeper than dark
+    - `#2dd4bf` teal link color that shimmers
+    - Coral warnings, sky-blue notes, indigo callouts
+
+    | Variable | Value |
+    | -------- | ----- |
+    | `--md-bg` | `#0a1628` |
+    | `--md-color` | `#cdd9e5` |
+    | `--md-link-color` | `#2dd4bf` |
+  </mark-down>
+</body>
+</html>

@@ -508,6 +508,52 @@
     }
     .callout p { color: var(--sub); font-size: .95rem; max-width: 420px; }
 
+    /* ── Theme Gallery ───────────────────────────────────────── */
+    .theme-gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+    @media (max-width: 700px) { .theme-gallery { grid-template-columns: 1fr; } }
+
+    .theme-card {
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: box-shadow .2s, border-color .2s;
+    }
+    .theme-card:hover { box-shadow: var(--shadow-lg); border-color: var(--border-md); }
+    .theme-card-wide { grid-column: 1 / -1; }
+
+    .theme-card-bar {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: .6rem 1.1rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .theme-card-name {
+      font-family: var(--mono); font-size: .78rem; font-weight: 500;
+      color: var(--text);
+    }
+    .theme-card-dl {
+      font-family: var(--mono); font-size: .72rem;
+      color: var(--sub); text-decoration: none;
+      padding: .22em .6em;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: var(--bg);
+      transition: background .13s, border-color .13s;
+    }
+    .theme-card-dl:hover { background: var(--bg-hover); border-color: var(--border-md); color: var(--text); }
+
+    .theme-card iframe {
+      width: 100%; height: 520px;
+      border: none; display: block;
+    }
+    .theme-card-wide iframe { height: 460px; }
+
     /* ── Footer ───────────────────────────────────────────────── */
     footer {
       border-top: 1px solid var(--border);
@@ -988,6 +1034,69 @@
         <p>Sepia tones and a serif font — earthy palette throughout, great for editorial or documentation sites.</p>
         <a href="themes/md-theme-warm.css" download class="dl-link" style="display:inline-block; margin-top: 1rem;"><code>md-theme-warm.css</code></a>
       </div>
+    </div>
+
+    <div class="steps" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 2.5rem;">
+      <div class="step">
+        <div class="step-num">Ocean</div>
+        <h3>md-theme-ocean.css</h3>
+        <p>Deep navy background with teal accents and vibrant callout colors — inspired by the ocean depths.</p>
+        <a href="themes/md-theme-ocean.css" download class="dl-link" style="display:inline-block; margin-top: 1rem;"><code>md-theme-ocean.css</code></a>
+      </div>
+      <div class="step">
+        <div class="step-num">Rose</div>
+        <h3>md-theme-rose.css</h3>
+        <p>Soft blush background with a serif font and deep rose accents — elegant, editorial, and timeless.</p>
+        <a href="themes/md-theme-rose.css" download class="dl-link" style="display:inline-block; margin-top: 1rem;"><code>md-theme-rose.css</code></a>
+      </div>
+    </div>
+
+    <span class="eyebrow" style="margin-top: 1rem;">All themes</span>
+    <h3 class="s-title" style="font-size: clamp(1.15rem, 2vw, 1.4rem); margin-bottom: .5rem;">Theme gallery</h3>
+    <p class="s-desc" style="margin-bottom: 1.75rem;">Every theme rendered live in its own isolated document — exactly what it looks like in production.</p>
+
+    <div class="theme-gallery">
+
+      <div class="theme-card">
+        <div class="theme-card-bar">
+          <span class="theme-card-name">md-theme-dark.css</span>
+          <a href="themes/md-theme-dark.css" download class="theme-card-dl">Download</a>
+        </div>
+        <iframe src="themes/preview-dark.html" title="Dark theme preview" loading="lazy"></iframe>
+      </div>
+
+      <div class="theme-card">
+        <div class="theme-card-bar">
+          <span class="theme-card-name">md-theme-ocean.css</span>
+          <a href="themes/md-theme-ocean.css" download class="theme-card-dl">Download</a>
+        </div>
+        <iframe src="themes/preview-ocean.html" title="Ocean theme preview" loading="lazy"></iframe>
+      </div>
+
+      <div class="theme-card">
+        <div class="theme-card-bar">
+          <span class="theme-card-name">md-theme-warm.css</span>
+          <a href="themes/md-theme-warm.css" download class="theme-card-dl">Download</a>
+        </div>
+        <iframe src="themes/preview-warm.html" title="Warm theme preview" loading="lazy"></iframe>
+      </div>
+
+      <div class="theme-card">
+        <div class="theme-card-bar">
+          <span class="theme-card-name">md-theme-rose.css</span>
+          <a href="themes/md-theme-rose.css" download class="theme-card-dl">Download</a>
+        </div>
+        <iframe src="themes/preview-rose.html" title="Rose theme preview" loading="lazy"></iframe>
+      </div>
+
+      <div class="theme-card theme-card-wide">
+        <div class="theme-card-bar">
+          <span class="theme-card-name">md-theme-minimal.css</span>
+          <a href="themes/md-theme-minimal.css" download class="theme-card-dl">Download</a>
+        </div>
+        <iframe src="themes/preview-minimal.html" title="Minimal theme preview" loading="lazy"></iframe>
+      </div>
+
     </div>
 
     <div class="editor">
