@@ -511,11 +511,12 @@
     /* ── Theme Gallery ───────────────────────────────────────── */
     .theme-gallery {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.25rem;
       margin-bottom: 2.5rem;
     }
-    @media (max-width: 700px) { .theme-gallery { grid-template-columns: 1fr; } }
+    @media (max-width: 900px) { .theme-gallery { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .theme-gallery { grid-template-columns: 1fr; } }
 
     .theme-card {
       border: 1px solid var(--border);
@@ -525,7 +526,6 @@
       transition: box-shadow .2s, border-color .2s;
     }
     .theme-card:hover { box-shadow: var(--shadow-lg); border-color: var(--border-md); }
-    .theme-card-wide { grid-column: 1 / -1; }
 
     .theme-card-bar {
       background: var(--bg-card);
@@ -549,10 +549,22 @@
     .theme-card-dl:hover { background: var(--bg-hover); border-color: var(--border-md); color: var(--text); }
 
     .theme-card iframe {
-      width: 100%; height: 520px;
+      width: 100%; height: 500px;
       border: none; display: block;
     }
-    .theme-card-wide iframe { height: 460px; }
+
+    .theme-card-code {
+      height: 500px;
+      overflow-y: auto;
+      padding: 1.25rem 1.5rem;
+      margin: 0;
+      font-family: var(--mono);
+      font-size: .78rem;
+      line-height: 1.75;
+      color: var(--text);
+      background: var(--bg);
+      white-space: pre;
+    }
 
     /* ── Footer ───────────────────────────────────────────────── */
     footer {
@@ -995,67 +1007,16 @@
   <div class="wrap">
     <span class="eyebrow">Theming</span>
     <h2 class="s-title">Make it yours</h2>
-    <p class="s-desc">Every color, font, size, and border in <code>mark-down.css</code> is a CSS variable. Override only what you need — everything else stays as the default.</p>
-
-    <div class="steps" style="margin-bottom: 2.5rem;">
-      <div class="step">
-        <div class="step-num">Option A &mdash; Pre-built theme</div>
-        <h3>Download a theme file</h3>
-        <p>Link one of the included theme files after the script tag. One line, done.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">Option B &mdash; Custom theme</div>
-        <h3>Write your own</h3>
-        <p>Create a CSS file that sets any <code>--md-*</code> variables on <code>mark-down</code>. Only declare what you want to change.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">Option C &mdash; Inline</div>
-        <h3>Override per element</h3>
-        <p>Set variables directly on any <code>&lt;mark-down&gt;</code> element via a <code>style</code> attribute or targeted CSS selector.</p>
-      </div>
-    </div>
-
-    <div class="steps" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 2.5rem;">
-      <div class="step">
-        <div class="step-num">Dark</div>
-        <h3>md-theme-dark.css</h3>
-        <p>GitHub-dark palette — lighter links, muted borders, and adapted callout colors for dark backgrounds.</p>
-        <a href="themes/md-theme-dark.css" download class="dl-link" style="display:inline-block; margin-top: 1rem;"><code>md-theme-dark.css</code></a>
-      </div>
-      <div class="step">
-        <div class="step-num">Minimal</div>
-        <h3>md-theme-minimal.css</h3>
-        <p>Serif font, no border-radius anywhere, transparent code backgrounds — stripped back to the essentials.</p>
-        <a href="themes/md-theme-minimal.css" download class="dl-link" style="display:inline-block; margin-top: 1rem;"><code>md-theme-minimal.css</code></a>
-      </div>
-      <div class="step">
-        <div class="step-num">Warm</div>
-        <h3>md-theme-warm.css</h3>
-        <p>Sepia tones and a serif font — earthy palette throughout, great for editorial or documentation sites.</p>
-        <a href="themes/md-theme-warm.css" download class="dl-link" style="display:inline-block; margin-top: 1rem;"><code>md-theme-warm.css</code></a>
-      </div>
-    </div>
-
-    <div class="steps" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 2.5rem;">
-      <div class="step">
-        <div class="step-num">Ocean</div>
-        <h3>md-theme-ocean.css</h3>
-        <p>Deep navy background with teal accents and vibrant callout colors — inspired by the ocean depths.</p>
-        <a href="themes/md-theme-ocean.css" download class="dl-link" style="display:inline-block; margin-top: 1rem;"><code>md-theme-ocean.css</code></a>
-      </div>
-      <div class="step">
-        <div class="step-num">Rose</div>
-        <h3>md-theme-rose.css</h3>
-        <p>Soft blush background with a serif font and deep rose accents — elegant, editorial, and timeless.</p>
-        <a href="themes/md-theme-rose.css" download class="dl-link" style="display:inline-block; margin-top: 1rem;"><code>md-theme-rose.css</code></a>
-      </div>
-    </div>
-
-    <span class="eyebrow" style="margin-top: 1rem;">All themes</span>
-    <h3 class="s-title" style="font-size: clamp(1.15rem, 2vw, 1.4rem); margin-bottom: .5rem;">Theme gallery</h3>
-    <p class="s-desc" style="margin-bottom: 1.75rem;">Every theme rendered live in its own isolated document — exactly what it looks like in production.</p>
+    <p class="s-desc">Every color, font, and border is a CSS variable — link a pre-built theme or override only what you need.</p>
 
     <div class="theme-gallery">
+
+      <div class="theme-card">
+        <div class="theme-card-bar">
+          <span class="theme-card-name">Default</span>
+        </div>
+        <iframe src="themes/preview-default.html" title="Default theme preview" loading="lazy"></iframe>
+      </div>
 
       <div class="theme-card">
         <div class="theme-card-bar">
@@ -1063,14 +1024,6 @@
           <a href="themes/md-theme-dark.css" download class="theme-card-dl">Download</a>
         </div>
         <iframe src="themes/preview-dark.html" title="Dark theme preview" loading="lazy"></iframe>
-      </div>
-
-      <div class="theme-card">
-        <div class="theme-card-bar">
-          <span class="theme-card-name">md-theme-ocean.css</span>
-          <a href="themes/md-theme-ocean.css" download class="theme-card-dl">Download</a>
-        </div>
-        <iframe src="themes/preview-ocean.html" title="Ocean theme preview" loading="lazy"></iframe>
       </div>
 
       <div class="theme-card">
@@ -1083,45 +1036,95 @@
 
       <div class="theme-card">
         <div class="theme-card-bar">
-          <span class="theme-card-name">md-theme-rose.css</span>
-          <a href="themes/md-theme-rose.css" download class="theme-card-dl">Download</a>
-        </div>
-        <iframe src="themes/preview-rose.html" title="Rose theme preview" loading="lazy"></iframe>
-      </div>
-
-      <div class="theme-card theme-card-wide">
-        <div class="theme-card-bar">
           <span class="theme-card-name">md-theme-minimal.css</span>
           <a href="themes/md-theme-minimal.css" download class="theme-card-dl">Download</a>
         </div>
         <iframe src="themes/preview-minimal.html" title="Minimal theme preview" loading="lazy"></iframe>
       </div>
 
-    </div>
-
-    <div class="editor">
-      <div class="editor-bar">
-        <div class="editor-dots">
-          <div class="editor-dot"></div>
-          <div class="editor-dot"></div>
-          <div class="editor-dot"></div>
+      <div class="theme-card">
+        <div class="theme-card-bar">
+          <span class="theme-card-name">md-theme-rose.css</span>
+          <a href="themes/md-theme-rose.css" download class="theme-card-dl">Download</a>
         </div>
-        <div class="editor-filename">index.html</div>
+        <iframe src="themes/preview-rose.html" title="Rose theme preview" loading="lazy"></iframe>
       </div>
-      <pre><span class="c">&lt;!-- Load the library --&gt;</span>
-<span class="t">&lt;script</span> <span class="a">src</span>=<span class="v">"src/mark-down.js"</span> <span class="a">defer</span><span class="t">&gt;&lt;/script&gt;</span>
 
-<span class="c">&lt;!-- Add a theme (pick one, or write your own) --&gt;</span>
-<span class="t">&lt;link</span> <span class="a">rel</span>=<span class="v">"stylesheet"</span> <span class="a">href</span>=<span class="v">"themes/md-theme-dark.css"</span><span class="t">&gt;</span>
+      <div class="theme-card">
+        <div class="theme-card-bar">
+          <span class="theme-card-name">Create your own</span>
+        </div>
+        <pre class="theme-card-code"><span class="c">/* Set any --md-* variable on mark-down.        */
+/* Only declare what you want to change.        */</span>
 
-<span class="c">&lt;!-- Or override individual variables inline --&gt;</span>
-<span class="t">&lt;style&gt;</span>
-<span class="tx">  mark-down {
-    --md-font-family:  Georgia, serif;
-    --md-link-color:   #b03a2e;
-    --md-pre-radius:   0;
-  }</span>
-<span class="t">&lt;/style&gt;</span></pre>
+<span class="t">mark-down</span> {
+
+  <span class="c">/* ─ Page ──────────────────────────────────── */</span>
+  <span class="a">--md-bg</span>:                        <span class="v">transparent</span>;
+  <span class="a">--md-color</span>:                     <span class="v">inherit</span>;
+  <span class="a">--md-padding</span>:                   <span class="v">0</span>;
+
+  <span class="c">/* ─ Typography ────────────────────────────── */</span>
+  <span class="a">--md-font-family</span>:               <span class="v">-apple-system, BlinkMacSystemFont,
+                                  "Segoe UI", Roboto, sans-serif</span>;
+  <span class="a">--md-font-size</span>:                 <span class="v">1rem</span>;
+  <span class="a">--md-line-height</span>:               <span class="v">1.7</span>;
+  <span class="a">--md-mono-font-family</span>:          <span class="v">"SFMono-Regular", Consolas,
+                                  "Liberation Mono", Menlo, monospace</span>;
+  <span class="a">--md-code-font-size</span>:            <span class="v">0.875em</span>;
+
+  <span class="c">/* ─ Headings ───────────────────────────────── */</span>
+  <span class="a">--md-heading-font-weight</span>:       <span class="v">600</span>;
+  <span class="a">--md-h1-font-size</span>:              <span class="v">2em</span>;
+  <span class="a">--md-h2-font-size</span>:              <span class="v">1.5em</span>;
+  <span class="a">--md-h3-font-size</span>:              <span class="v">1.25em</span>;
+  <span class="a">--md-h4-font-size</span>:              <span class="v">1em</span>;
+  <span class="a">--md-h5-font-size</span>:              <span class="v">0.875em</span>;
+  <span class="a">--md-h6-font-size</span>:              <span class="v">0.85em</span>;
+
+  <span class="c">/* ─ Links ──────────────────────────────────── */</span>
+  <span class="a">--md-link-color</span>:                <span class="v">#0969da</span>;
+
+  <span class="c">/* ─ Code ───────────────────────────────────── */</span>
+  <span class="a">--md-code-bg</span>:                   <span class="v">rgba(128, 128, 128, 0.15)</span>;
+  <span class="a">--md-code-radius</span>:               <span class="v">4px</span>;
+  <span class="a">--md-pre-bg</span>:                    <span class="v">rgba(128, 128, 128, 0.12)</span>;
+  <span class="a">--md-pre-radius</span>:                <span class="v">6px</span>;
+
+  <span class="c">/* ─ Blockquote ─────────────────────────────── */</span>
+  <span class="a">--md-blockquote-border-width</span>:   <span class="v">4px</span>;
+  <span class="a">--md-blockquote-border-color</span>:   <span class="v">currentColor</span>;
+
+  <span class="c">/* ─ Images ─────────────────────────────────── */</span>
+  <span class="a">--md-img-radius</span>:                <span class="v">4px</span>;
+
+  <span class="c">/* ─ Tables ─────────────────────────────────── */</span>
+  <span class="a">--md-table-border-color</span>:        <span class="v">#c8c8c8</span>;
+  <span class="a">--md-table-header-bg</span>:           <span class="v">rgba(128, 128, 128, 0.1)</span>;
+  <span class="a">--md-table-stripe-bg</span>:           <span class="v">rgba(128, 128, 128, 0.05)</span>;
+  <span class="a">--md-table-font-size</span>:           <span class="v">0.95em</span>;
+  <span class="a">--md-table-radius</span>:              <span class="v">6px</span>;
+
+  <span class="c">/* ─ Callouts ───────────────────────────────── */</span>
+  <span class="a">--md-callout-radius</span>:            <span class="v">6px</span>;
+  <span class="a">--md-callout-note-color</span>:        <span class="v">#0969da</span>;
+  <span class="a">--md-callout-note-bg</span>:           <span class="v">rgba(9, 105, 218, 0.08)</span>;
+  <span class="a">--md-callout-tip-color</span>:         <span class="v">#1a7f37</span>;
+  <span class="a">--md-callout-tip-bg</span>:            <span class="v">rgba(26, 127, 55, 0.08)</span>;
+  <span class="a">--md-callout-important-color</span>:   <span class="v">#8250df</span>;
+  <span class="a">--md-callout-important-bg</span>:      <span class="v">rgba(130, 80, 223, 0.08)</span>;
+  <span class="a">--md-callout-warning-color</span>:     <span class="v">#9a6700</span>;
+  <span class="a">--md-callout-warning-bg</span>:        <span class="v">rgba(154, 103, 0, 0.08)</span>;
+  <span class="a">--md-callout-caution-color</span>:     <span class="v">#cf222e</span>;
+  <span class="a">--md-callout-caution-bg</span>:        <span class="v">rgba(207, 34, 46, 0.08)</span>;
+
+  <span class="c">/* ─ Checkboxes ─────────────────────────────── */</span>
+  <span class="a">--md-checkbox-color</span>:            <span class="v">#0969da</span>;
+  <span class="a">--md-checkbox-filter</span>:           <span class="v">none</span>;
+
+}</pre>
+      </div>
+
     </div>
 
   </div>

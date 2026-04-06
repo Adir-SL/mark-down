@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="../src/mark-down.js" defer></script>
+  <link rel="stylesheet" href="../src/mark-down.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #ffffff; padding: 1.75rem 2rem; }
+  </style>
+</head>
+<body>
+  <mark-down>
+    # Default
+
+    The built-in style — clean, neutral, and inherits your page's colors. No theme file needed.
+
+    Visit the [mark-down.js repo](https://github.com/Adir-SL/mark-down) to get started.
+
+    > [!NOTE]
+    > This is what you get out of the box — no theme CSS loaded.
+
+    > [!TIP]
+    > The default adapts to your page's `color` and `font-size` automatically.
+
+    ## Code example
+
+    ```js
+    function greet(name) {
+      return `Hello, ${name}!`;
+    }
+    console.log(greet("world"));
+    ```
+
+    ## What's included
+
+    - Inherits `currentColor` from the page
+    - Sans-serif system font stack
+    - Subtle grey code backgrounds and rounded borders
+
+    | Variable | Default |
+    | -------- | ------- |
+    | `--md-bg` | `transparent` |
+    | `--md-color` | `inherit` |
+    | `--md-link-color` | `#0969da` |
+  </mark-down>
+</body>
+</html>
