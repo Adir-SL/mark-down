@@ -1055,74 +1055,70 @@
         <div class="theme-card-bar">
           <span class="theme-card-name">Create your own</span>
         </div>
-        <pre class="theme-card-code"><span class="c">/* Set any --md-* variable on mark-down.        */
-/* Only declare what you want to change.        */</span>
+        <pre class="theme-card-code"><span class="c">/* Set any --md-* variable on mark-down.
+   Only declare what you want to change. */</span>
 
 <span class="t">mark-down</span> {
+  <span class="c">/* Page */</span>
+  <span class="a">--md-bg</span>: <span class="v">transparent</span>;
+  <span class="a">--md-color</span>: <span class="v">inherit</span>;
+  <span class="a">--md-padding</span>: <span class="v">0</span>;
 
-  <span class="c">/* ─ Page ──────────────────────────────────── */</span>
-  <span class="a">--md-bg</span>:                        <span class="v">transparent</span>;
-  <span class="a">--md-color</span>:                     <span class="v">inherit</span>;
-  <span class="a">--md-padding</span>:                   <span class="v">0</span>;
+  <span class="c">/* Typography */</span>
+  <span class="a">--md-font-family</span>: <span class="v">-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif</span>;
+  <span class="a">--md-font-size</span>: <span class="v">1rem</span>;
+  <span class="a">--md-line-height</span>: <span class="v">1.7</span>;
+  <span class="a">--md-mono-font-family</span>: <span class="v">"SFMono-Regular", Consolas, "Liberation Mono", monospace</span>;
+  <span class="a">--md-code-font-size</span>: <span class="v">0.875em</span>;
 
-  <span class="c">/* ─ Typography ────────────────────────────── */</span>
-  <span class="a">--md-font-family</span>:               <span class="v">-apple-system, BlinkMacSystemFont,
-                                  "Segoe UI", Roboto, sans-serif</span>;
-  <span class="a">--md-font-size</span>:                 <span class="v">1rem</span>;
-  <span class="a">--md-line-height</span>:               <span class="v">1.7</span>;
-  <span class="a">--md-mono-font-family</span>:          <span class="v">"SFMono-Regular", Consolas,
-                                  "Liberation Mono", Menlo, monospace</span>;
-  <span class="a">--md-code-font-size</span>:            <span class="v">0.875em</span>;
+  <span class="c">/* Headings */</span>
+  <span class="a">--md-heading-font-weight</span>: <span class="v">600</span>;
+  <span class="a">--md-h1-font-size</span>: <span class="v">2em</span>;
+  <span class="a">--md-h2-font-size</span>: <span class="v">1.5em</span>;
+  <span class="a">--md-h3-font-size</span>: <span class="v">1.25em</span>;
+  <span class="a">--md-h4-font-size</span>: <span class="v">1em</span>;
+  <span class="a">--md-h5-font-size</span>: <span class="v">0.875em</span>;
+  <span class="a">--md-h6-font-size</span>: <span class="v">0.85em</span>;
 
-  <span class="c">/* ─ Headings ───────────────────────────────── */</span>
-  <span class="a">--md-heading-font-weight</span>:       <span class="v">600</span>;
-  <span class="a">--md-h1-font-size</span>:              <span class="v">2em</span>;
-  <span class="a">--md-h2-font-size</span>:              <span class="v">1.5em</span>;
-  <span class="a">--md-h3-font-size</span>:              <span class="v">1.25em</span>;
-  <span class="a">--md-h4-font-size</span>:              <span class="v">1em</span>;
-  <span class="a">--md-h5-font-size</span>:              <span class="v">0.875em</span>;
-  <span class="a">--md-h6-font-size</span>:              <span class="v">0.85em</span>;
+  <span class="c">/* Links */</span>
+  <span class="a">--md-link-color</span>: <span class="v">#0969da</span>;
 
-  <span class="c">/* ─ Links ──────────────────────────────────── */</span>
-  <span class="a">--md-link-color</span>:                <span class="v">#0969da</span>;
+  <span class="c">/* Code */</span>
+  <span class="a">--md-code-bg</span>: <span class="v">rgba(128, 128, 128, 0.15)</span>;
+  <span class="a">--md-code-radius</span>: <span class="v">4px</span>;
+  <span class="a">--md-pre-bg</span>: <span class="v">rgba(128, 128, 128, 0.12)</span>;
+  <span class="a">--md-pre-radius</span>: <span class="v">6px</span>;
 
-  <span class="c">/* ─ Code ───────────────────────────────────── */</span>
-  <span class="a">--md-code-bg</span>:                   <span class="v">rgba(128, 128, 128, 0.15)</span>;
-  <span class="a">--md-code-radius</span>:               <span class="v">4px</span>;
-  <span class="a">--md-pre-bg</span>:                    <span class="v">rgba(128, 128, 128, 0.12)</span>;
-  <span class="a">--md-pre-radius</span>:                <span class="v">6px</span>;
+  <span class="c">/* Blockquote */</span>
+  <span class="a">--md-blockquote-border-width</span>: <span class="v">4px</span>;
+  <span class="a">--md-blockquote-border-color</span>: <span class="v">currentColor</span>;
 
-  <span class="c">/* ─ Blockquote ─────────────────────────────── */</span>
-  <span class="a">--md-blockquote-border-width</span>:   <span class="v">4px</span>;
-  <span class="a">--md-blockquote-border-color</span>:   <span class="v">currentColor</span>;
+  <span class="c">/* Images */</span>
+  <span class="a">--md-img-radius</span>: <span class="v">4px</span>;
 
-  <span class="c">/* ─ Images ─────────────────────────────────── */</span>
-  <span class="a">--md-img-radius</span>:                <span class="v">4px</span>;
+  <span class="c">/* Tables */</span>
+  <span class="a">--md-table-border-color</span>: <span class="v">#c8c8c8</span>;
+  <span class="a">--md-table-header-bg</span>: <span class="v">rgba(128, 128, 128, 0.1)</span>;
+  <span class="a">--md-table-stripe-bg</span>: <span class="v">rgba(128, 128, 128, 0.05)</span>;
+  <span class="a">--md-table-font-size</span>: <span class="v">0.95em</span>;
+  <span class="a">--md-table-radius</span>: <span class="v">6px</span>;
 
-  <span class="c">/* ─ Tables ─────────────────────────────────── */</span>
-  <span class="a">--md-table-border-color</span>:        <span class="v">#c8c8c8</span>;
-  <span class="a">--md-table-header-bg</span>:           <span class="v">rgba(128, 128, 128, 0.1)</span>;
-  <span class="a">--md-table-stripe-bg</span>:           <span class="v">rgba(128, 128, 128, 0.05)</span>;
-  <span class="a">--md-table-font-size</span>:           <span class="v">0.95em</span>;
-  <span class="a">--md-table-radius</span>:              <span class="v">6px</span>;
+  <span class="c">/* Callouts */</span>
+  <span class="a">--md-callout-radius</span>: <span class="v">6px</span>;
+  <span class="a">--md-callout-note-color</span>: <span class="v">#0969da</span>;
+  <span class="a">--md-callout-note-bg</span>: <span class="v">rgba(9, 105, 218, 0.08)</span>;
+  <span class="a">--md-callout-tip-color</span>: <span class="v">#1a7f37</span>;
+  <span class="a">--md-callout-tip-bg</span>: <span class="v">rgba(26, 127, 55, 0.08)</span>;
+  <span class="a">--md-callout-important-color</span>: <span class="v">#8250df</span>;
+  <span class="a">--md-callout-important-bg</span>: <span class="v">rgba(130, 80, 223, 0.08)</span>;
+  <span class="a">--md-callout-warning-color</span>: <span class="v">#9a6700</span>;
+  <span class="a">--md-callout-warning-bg</span>: <span class="v">rgba(154, 103, 0, 0.08)</span>;
+  <span class="a">--md-callout-caution-color</span>: <span class="v">#cf222e</span>;
+  <span class="a">--md-callout-caution-bg</span>: <span class="v">rgba(207, 34, 46, 0.08)</span>;
 
-  <span class="c">/* ─ Callouts ───────────────────────────────── */</span>
-  <span class="a">--md-callout-radius</span>:            <span class="v">6px</span>;
-  <span class="a">--md-callout-note-color</span>:        <span class="v">#0969da</span>;
-  <span class="a">--md-callout-note-bg</span>:           <span class="v">rgba(9, 105, 218, 0.08)</span>;
-  <span class="a">--md-callout-tip-color</span>:         <span class="v">#1a7f37</span>;
-  <span class="a">--md-callout-tip-bg</span>:            <span class="v">rgba(26, 127, 55, 0.08)</span>;
-  <span class="a">--md-callout-important-color</span>:   <span class="v">#8250df</span>;
-  <span class="a">--md-callout-important-bg</span>:      <span class="v">rgba(130, 80, 223, 0.08)</span>;
-  <span class="a">--md-callout-warning-color</span>:     <span class="v">#9a6700</span>;
-  <span class="a">--md-callout-warning-bg</span>:        <span class="v">rgba(154, 103, 0, 0.08)</span>;
-  <span class="a">--md-callout-caution-color</span>:     <span class="v">#cf222e</span>;
-  <span class="a">--md-callout-caution-bg</span>:        <span class="v">rgba(207, 34, 46, 0.08)</span>;
-
-  <span class="c">/* ─ Checkboxes ─────────────────────────────── */</span>
-  <span class="a">--md-checkbox-color</span>:            <span class="v">#0969da</span>;
-  <span class="a">--md-checkbox-filter</span>:           <span class="v">none</span>;
-
+  <span class="c">/* Checkboxes */</span>
+  <span class="a">--md-checkbox-color</span>: <span class="v">#0969da</span>;
+  <span class="a">--md-checkbox-filter</span>: <span class="v">none</span>;
 }</pre>
       </div>
 
