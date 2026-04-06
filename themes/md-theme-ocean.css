@@ -1,0 +1,24 @@
+mark-down {
+  --md-bg: #0a1628;
+  --md-color: #cdd9e5;
+  --md-padding: 1rem;
+  --md-link-color: #2dd4bf;
+  --md-code-bg: rgba(45, 212, 191, 0.08);
+  --md-pre-bg: rgba(45, 212, 191, 0.05);
+  --md-blockquote-border-color: #1e4d6b;
+  --md-table-border-color: #1e3a52;
+  --md-table-header-bg: rgba(45, 212, 191, 0.08);
+  --md-table-stripe-bg: rgba(255, 255, 255, 0.02);
+  --md-callout-note-color: #38bdf8;
+  --md-callout-note-bg: rgba(56, 189, 248, 0.08);
+  --md-callout-tip-color: #2dd4bf;
+  --md-callout-tip-bg: rgba(45, 212, 191, 0.08);
+  --md-callout-important-color: #818cf8;
+  --md-callout-important-bg: rgba(129, 140, 248, 0.08);
+  --md-callout-warning-color: #fb923c;
+  --md-callout-warning-bg: rgba(251, 146, 60, 0.08);
+  --md-callout-caution-color: #f87171;
+  --md-callout-caution-bg: rgba(248, 113, 113, 0.08);
+  --md-checkbox-color: #2dd4bf;
+  --md-checkbox-filter: invert(1);
+}
