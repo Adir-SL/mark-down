@@ -12,17 +12,18 @@
 </head>
 <body>
   <mark-down>
-    # Default
+    # MD Preview
 
-    The built-in style — clean, neutral, and inherits your page's colors. No theme file needed.
-
-    Visit the [mark-down.js repo](https://github.com/Adir-SL/mark-down) to get started.
+    A clean layout with **bold**, *italic*, and `inline code` — plus a [sample link](#).
 
     > [!NOTE]
-    > This is what you get out of the box — no theme CSS loaded.
+    > Informational callout — highlights something worth knowing.
 
     > [!TIP]
-    > The default adapts to your page's `color` and `font-size` automatically.
+    > Tip callout — helpful guidance for the reader.
+
+    > [!WARNING]
+    > Warning callout — demands the reader's attention.
 
     ## Code example
 
@@ -33,17 +34,17 @@
     console.log(greet("world"));
     ```
 
-    ## What's included
+    ## Features
 
-    - Inherits `currentColor` from the page
-    - Sans-serif system font stack
-    - Subtle grey code backgrounds and rounded borders
+    - Headings, **bold**, *italic*, ~~strikethrough~~
+    - Inline `code` and fenced code blocks
+    - Lists, task lists, blockquotes, tables
 
-    | Variable | Default |
-    | -------- | ------- |
-    | `--md-bg` | `transparent` |
-    | `--md-color` | `inherit` |
-    | `--md-link-color` | `#0969da` |
+    | Element | Variable |
+    | ------- | -------- |
+    | Background | `--md-bg` |
+    | Links | `--md-link-color` |
+    | Code | `--md-code-bg` |
   </mark-down>
 </body>
 </html>
