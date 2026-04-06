@@ -43,6 +43,8 @@ your-project/
 └── themes/          ← optional
     ├── md-theme-dark.css
     ├── md-theme-minimal.css
+    ├── md-theme-ocean.css
+    ├── md-theme-rose.css
     └── md-theme-warm.css
 ```
 
@@ -198,12 +200,14 @@ Download one of the included theme files and link it in your `<head>` **after** 
 <link rel="stylesheet" href="themes/md-theme-dark.css">
 ```
 
-Three themes are included:
+Five themes are included:
 
 | File | Description |
 | --- | --- |
-| `themes/md-theme-dark.css` | Dark mode: GitHub-dark-style palette, lighter link and callout colors |
+| `themes/md-theme-dark.css` | Dark: GitHub-dark-style palette, lighter link and callout colors |
 | `themes/md-theme-minimal.css` | Minimal: serif font, no border-radius, transparent code backgrounds |
+| `themes/md-theme-ocean.css` | Ocean: deep navy background with teal accents and vibrant callout colors |
+| `themes/md-theme-rose.css` | Rose: soft blush background, Georgia serif, deep rose accents |
 | `themes/md-theme-warm.css` | Warm: sepia tones, serif font, earthy palette throughout |
 
 ### Writing your own theme
